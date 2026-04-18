@@ -1,0 +1,1 @@
+import{_ as a,o,c as t,ae as l}from"./chunks/framework.GJnJ2J4K.js";const m=JSON.parse('{"title":"LocalCloud","description":"","frontmatter":{},"headers":[],"relativePath":"index.md","filePath":"index.md"}'),n={name:"index.md"};function i(d,e,c,r,u,s){return o(),t("div",null,[...e[0]||(e[0]=[l("",4)])])}const h=a(n,[["render",i]]);export{m as __pageData,h as default};
