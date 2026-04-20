@@ -5,7 +5,6 @@ import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
   site: 'https://localstack-google.github.io',
-  base: '/localcloud-site',
   integrations: [mdx(), sitemap()],
   vite: {
     plugins: [tailwindcss()],

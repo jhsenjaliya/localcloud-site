@@ -7,8 +7,15 @@ interface Props {
   ogImage?: string;
 }
 
-const { title, description = 'LocalCloud — Google Cloud Platform in a box. Run 15 GCP services locally in a single Docker container.', ogImage = '/localcloud-site/og-image.png' } = Astro.props;
+const rawBase = import.meta.env.BASE_URL;
+const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+const {
+  title,
+  description = 'LocalCloud — Google Cloud Platform in a box. Run major Google Cloud services locally in a single Docker container.',
+  ogImage = `${base}illustrations/hero-laptop-service-grid.svg`,
+} = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogImageURL = new URL(ogImage, Astro.site);
 ---
 
 <!doctype html>
@@ -24,13 +31,13 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={ogImage} />
+    <meta property="og:image" content={ogImageURL} />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image" content={ogImageURL} />
 
     <!-- Fonts: IBM Plex Sans (display/body) + IBM Plex Mono (code) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
