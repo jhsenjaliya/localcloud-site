@@ -1,16 +1,14 @@
-name: Deploy site to Pages
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read
   pages: write
   id-token: write
-
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 concurrency:
   group: "pages"
@@ -20,25 +18,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Checkout your repository using git
+        uses: actions/checkout@v6
+      - name: Install, build, and upload your site
+        uses: withastro/action@v6
         with:
-          fetch-depth: 0
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-      - name: Install dependencies
-        run: npm ci
-      - name: Build
-        run: npm run build
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: dist
+          node-version: 20
 
   deploy:
     environment:
@@ -49,4 +34,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
