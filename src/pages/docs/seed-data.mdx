@@ -1,0 +1,170 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: Seed Data
+description: Pre-populate LocalCloud services with test data using YAML seed files.
+---
+
+# Seed Data
+
+Seed files let you pre-populate LocalCloud services with test data on startup. Define your data in YAML and it loads automatically.
+
+## Usage
+
+```bash
+# Load seed data via the Admin API
+curl -X POST http://localhost:8080/_localcloud/seed \
+  -H "Content-Type: application/yaml" \
+  --data-binary @seed.yaml
+```
+
+You can also mount a seed file at startup:
+
+```bash
+docker run -d \
+  -v ./seed.yaml:/etc/localcloud/seed.yaml \
+  -p 8080:8080 -p 4443:4443 \
+  -p 8085-8087:8085-8087 \
+  -p 9010:9010 -p 9050:9050 -p 6379:6379 \
+  -m 4g --name localcloud \
+  jaysen2apache/localcloud
+```
+
+## Seed File Format
+
+A seed file is a YAML document with top-level keys for each service:
+
+```yaml
+# seed.yaml
+
+storage:
+  buckets:
+    - name: my-bucket
+      objects:
+        - key: documents/hello.txt
+          content: "Hello, world!"
+        - key: data/config.json
+          content: '{"env": "local", "debug": true}'
+
+pubsub:
+  topics:
+    - name: user-events
+      subscriptions:
+        - name: user-events-sub
+    - name: order-events
+      subscriptions:
+        - name: order-processor
+        - name: order-analytics
+
+firestore:
+  collections:
+    - name: users
+      documents:
+        - id: user-001
+          data:
+            name: Alice
+            email: alice@example.com
+            role: admin
+        - id: user-002
+          data:
+            name: Bob
+            email: bob@example.com
+            role: member
+
+bigquery:
+  datasets:
+    - name: analytics
+      tables:
+        - name: events
+          schema:
+            - name: event_id
+              type: STRING
+            - name: event_type
+              type: STRING
+            - name: timestamp
+              type: TIMESTAMP
+            - name: user_id
+              type: STRING
+
+secrets:
+  - name: api-key
+    value: "sk-local-test-key-12345"
+  - name: db-password
+    value: "local-dev-password"
+
+memorystore:
+  keys:
+    - key: "session:abc123"
+      value: '{"user_id": "user-001", "expires": 1700000000}'
+      ttl: 3600
+    - key: "cache:config"
+      value: '{"feature_flags": {"dark_mode": true}}'
+```
+
+## Service-Specific Formats
+
+### Cloud Storage
+```yaml
+storage:
+  buckets:
+    - name: bucket-name
+      objects:
+        - key: path/to/file.txt
+          content: "file contents"
+```
+
+### Pub/Sub
+```yaml
+pubsub:
+  topics:
+    - name: topic-name
+      subscriptions:
+        - name: subscription-name
+```
+
+### Firestore
+```yaml
+firestore:
+  collections:
+    - name: collection-name
+      documents:
+        - id: doc-id
+          data:
+            field: value
+```
+
+### BigQuery
+```yaml
+bigquery:
+  datasets:
+    - name: dataset-name
+      tables:
+        - name: table-name
+          schema:
+            - name: column_name
+              type: STRING|INTEGER|FLOAT|BOOLEAN|TIMESTAMP
+```
+
+### Secret Manager
+```yaml
+secrets:
+  - name: secret-name
+    value: "secret-value"
+```
+
+### Memorystore
+```yaml
+memorystore:
+  keys:
+    - key: "key-name"
+      value: "value"
+      ttl: 3600  # optional, seconds
+```
+
+## Reset with Seed Restore
+
+```bash
+# Clear all data and reload seed
+curl -X POST http://localhost:8080/_localcloud/reset \
+  -H "Content-Type: application/json" \
+  -d '{"restore_seed": true}'
+```

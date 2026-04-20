@@ -1,0 +1,60 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: Services Overview
+description: How LocalCloud groups major Google Cloud services for local development.
+---
+
+# Services Overview
+
+LocalCloud focuses on the major Google Cloud services teams tend to need first during local development. The website and service catalog group them the same way Google Cloud users already think about the platform: by product category, not by emulator internals.
+
+## Storage
+
+- **Cloud Storage** for buckets, object access, uploads, downloads, and file-heavy local workflows.
+
+## Databases
+
+- **Firestore** for document-style application state.
+- **Spanner** for relational and transactional SQL flows.
+- **Bigtable** for wide-column and large key-range workloads.
+- **Memorystore** for Redis-style cache and low-latency data access.
+
+## Analytics
+
+- **BigQuery** for warehouse-style SQL and local dataset development.
+
+## Messaging & Workflow
+
+- **Pub/Sub** for eventing and asynchronous delivery.
+- **Cloud Tasks** for queued background work and HTTP dispatch.
+- **Cloud Workflows** for multi-step orchestration.
+
+## Security
+
+- **Secret Manager** for local secret and version access.
+
+## Operations
+
+- **Cloud Logging** for ingesting and browsing logs locally.
+- **Cloud Monitoring** for metrics and local health-oriented workflows.
+
+## Compute & Runtime
+
+- **GKE**
+- **Compute Engine**
+- **Cloud Run**
+
+These runtime surfaces are intentionally marked as opt-in because they depend on Docker-backed behavior.
+
+## Where Implementation Notes Live
+
+The main homepage and service catalog stay focused on what each service is for. If you want to know how a specific service is implemented locally, open that service’s detail page. Each one includes:
+
+- Connection info and environment variables
+- Supported capabilities and current gaps
+- A brief implementation note
+- Default-on vs opt-in runtime status
+
+## Next Step
+
+Open the [service catalog](/localcloud-site/services/) to browse services by category, then click through to a detail page for exact local behavior boundaries.

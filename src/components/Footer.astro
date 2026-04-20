@@ -1,0 +1,64 @@
+---
+const rawBase = import.meta.env.BASE_URL;
+const base = rawBase.endsWith('/') ? rawBase : rawBase + '/';
+---
+
+<footer class="site-footer">
+  <div class="container site-footer__intro">
+    <div class="site-footer__intro-copy">
+      <span class="site-kicker">Google Cloud In-a-Box</span>
+      <p>One container, local SDK targets, and a faster inner loop for the Google Cloud services teams reach for first.</p>
+    </div>
+
+    <div class="site-footer__chips">
+      <span class="site-chip site-chip--accent">single container</span>
+      <span class="site-chip site-chip--success">zero code changes</span>
+      <span class="site-chip site-chip--accent">local console</span>
+      <span class="site-chip site-chip--warn">&lt; 1 min boot</span>
+    </div>
+  </div>
+
+  <div class="container site-footer__grid">
+    <div class="site-footer__brand">
+      <a href={base} class="site-brand">
+        <span class="site-brand__dot"></span>
+        <span>LocalCloud</span>
+      </a>
+      <p class="mt-4">
+        Google Cloud development without the credential dance: one container, local SDK targets, and a tighter inner loop for the services teams use most.
+      </p>
+    </div>
+
+    <div class="site-footer__group">
+      <h4>Product</h4>
+      <ul>
+        <li><a href={base}>Homepage</a></li>
+        <li><a href={`${base}services/`}>Services</a></li>
+        <li><a href={`${base}docs/console/`}>Web Console</a></li>
+      </ul>
+    </div>
+
+    <div class="site-footer__group">
+      <h4>Resources</h4>
+      <ul>
+        <li><a href={`${base}docs/`}>Getting Started</a></li>
+        <li><a href={`${base}docs/architecture/`}>Architecture</a></li>
+        <li><a href={`${base}docs/sdk-examples/`}>SDK Examples</a></li>
+      </ul>
+    </div>
+
+    <div class="site-footer__group">
+      <h4>Community</h4>
+      <ul>
+        <li><a href="https://github.com/LocalStack-Google/localcloud-site" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+        <li><a href={`${base}docs/faq/`}>FAQ</a></li>
+        <li><a href={`${base}review/`}>Review Variant</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="container site-footer__meta">
+    <span>&copy; {new Date().getFullYear()} LocalCloud · Apache-2.0</span>
+    <a href={`${base}variation-field-manual/`}>Homepage Variation</a>
+  </div>
+</footer>

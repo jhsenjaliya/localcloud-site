@@ -1,0 +1,97 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: Configuration
+description: Environment variables and configuration options for LocalCloud.
+---
+
+# Configuration
+
+LocalCloud is configured through environment variables passed to the Docker container. Most teams only need the default boot path plus the generated SDK environment export; the rest of this page covers the knobs you can turn when you need a more tailored local runtime.
+
+## Core Settings
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `LOCALCLOUD_PROJECT` | `local-project` | Default GCP project ID |
+| `LOCALCLOUD_SERVICES` | all enabled | Comma-separated list of services to enable |
+| `LOCALCLOUD_SEED_FILE` | `/etc/localcloud/seed.yaml` | Path to seed file inside container |
+| `LOCALCLOUD_DATA_DIR` | `/var/lib/localcloud` | Persistent data directory |
+| `LOCALCLOUD_IAM_MODE` | `permissive` | IAM mode: `permissive`, `strict`, or `gcp-live` |
+| `JAVA_OPTS` | `-Xmx512m -Xms128m` | JVM flags for the gateway |
+
+## IAM Modes
+
+- **`permissive`** (default) — No credentials required. All requests are accepted.
+- **`strict`** — Validates token format but doesn't verify against a real identity provider.
+- **`gcp-live`** — Proxies IAM checks to real GCP (requires credentials).
+
+## Per-Service Toggle
+
+Each service can be individually enabled or disabled:
+
+| Variable | Default | Service |
+|----------|---------|---------|
+| `LOCALCLOUD_ENABLE_GCS` | `true` | Cloud Storage |
+| `LOCALCLOUD_ENABLE_PUBSUB` | `true` | Pub/Sub |
+| `LOCALCLOUD_ENABLE_FIRESTORE` | `true` | Firestore |
+| `LOCALCLOUD_ENABLE_BIGQUERY` | `true` | BigQuery |
+| `LOCALCLOUD_ENABLE_SPANNER` | `true` | Spanner |
+| `LOCALCLOUD_ENABLE_BIGTABLE` | `true` | Bigtable |
+| `LOCALCLOUD_ENABLE_SECRETMANAGER` | `true` | Secret Manager |
+| `LOCALCLOUD_ENABLE_CLOUDTASKS` | `true` | Cloud Tasks |
+| `LOCALCLOUD_ENABLE_LOGGING` | `true` | Cloud Logging |
+| `LOCALCLOUD_ENABLE_MONITORING` | `true` | Cloud Monitoring |
+| `LOCALCLOUD_ENABLE_MEMORYSTORE` | `true` | Memorystore (Redis) |
+| `LOCALCLOUD_ENABLE_GKE` | `false` | GKE (requires Docker socket) |
+| `LOCALCLOUD_ENABLE_COMPUTE` | `false` | Compute Engine (requires Docker socket) |
+| `LOCALCLOUD_ENABLE_CLOUDRUN` | `false` | Cloud Run (requires Docker socket) |
+
+## SDK Environment Variables
+
+When LocalCloud is running, set these variables so your GCP SDKs connect locally:
+
+| Variable | Value | Service |
+|----------|-------|---------|
+| `STORAGE_EMULATOR_HOST` | `http://localhost:4443` | Cloud Storage |
+| `PUBSUB_EMULATOR_HOST` | `localhost:8085` | Pub/Sub |
+| `FIRESTORE_EMULATOR_HOST` | `localhost:8086` | Firestore |
+| `BIGTABLE_EMULATOR_HOST` | `localhost:8087` | Bigtable |
+| `SPANNER_EMULATOR_HOST` | `localhost:9010` | Spanner |
+| `BIGQUERY_EMULATOR_HOST` | `http://localhost:9050` | BigQuery |
+| `SECRET_MANAGER_EMULATOR_HOST` | `localhost:8080` | Secret Manager |
+| `CLOUD_TASKS_EMULATOR_HOST` | `localhost:8080` | Cloud Tasks |
+| `REDIS_HOST` | `localhost` | Memorystore |
+| `GOOGLE_CLOUD_PROJECT` | `local-project` | All services |
+
+Use the generated export block to set these automatically:
+
+```bash
+eval "$(curl -s http://localhost:8080/_localcloud/env?format=shell)"
+```
+
+## Docker Compose
+
+```yaml
+services:
+  localcloud:
+    image: jaysen2apache/localcloud
+    ports:
+      - "8080:8080"
+      - "4443:4443"
+      - "8085-8087:8085-8087"
+      - "9010:9010"
+      - "9050:9050"
+      - "6379:6379"
+    environment:
+      LOCALCLOUD_PROJECT: my-project
+      LOCALCLOUD_ENABLE_GKE: "false"
+    volumes:
+      - localcloud-data:/var/lib/localcloud
+    deploy:
+      resources:
+        limits:
+          memory: 4g
+
+volumes:
+  localcloud-data:
+```

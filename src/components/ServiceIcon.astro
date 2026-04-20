@@ -1,0 +1,32 @@
+---
+interface Props {
+  iconId: string;
+  name: string;
+  size?: number;
+  class?: string;
+  decorative?: boolean;
+}
+
+const {
+  iconId,
+  name,
+  size = 24,
+  class: className = '',
+  decorative = true,
+} = Astro.props;
+
+const rawBase = import.meta.env.BASE_URL;
+const base = rawBase.endsWith('/') ? rawBase : rawBase + '/';
+const src = `${base}icons/${iconId}.svg`;
+---
+
+<img
+  src={src}
+  alt={decorative ? '' : `${name} icon`}
+  width={size}
+  height={size}
+  class={className}
+  style="object-fit: contain;"
+  loading="lazy"
+  aria-hidden={decorative ? 'true' : undefined}
+/>

@@ -1,0 +1,160 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import CopyButton from '../../components/CopyButton.astro';
+import ServiceIcon from '../../components/ServiceIcon.astro';
+import { getServiceCategoryLabel, getServiceImplementationLabel, getServiceImplementationNote, services } from '../../data/services';
+import type { Service } from '../../data/services';
+
+export function getStaticPaths() {
+  return services.map((service) => ({
+    params: { slug: service.slug },
+    props: { service },
+  }));
+}
+
+interface Props {
+  service: Service;
+}
+
+const { service } = Astro.props;
+const rawBase = import.meta.env.BASE_URL;
+const base = rawBase.endsWith('/') ? rawBase : rawBase + '/';
+const categoryLabel = getServiceCategoryLabel(service);
+---
+
+<BaseLayout title={`${service.name} — LocalCloud`} description={service.description}>
+  <Header />
+
+  <main id="main-content" class="site-page">
+    <section class="site-section site-section--hero">
+      <div class="container grid gap-8 xl:grid-cols-[1fr,0.85fr]">
+        <div class="reveal">
+          <nav class="mb-5 flex items-center gap-2 text-sm text-[var(--text-3)]">
+            <a href={`${base}services/`} class="hover:text-[var(--text)]">Services</a>
+            <span>/</span>
+            <span class="text-[var(--text)]">{service.name}</span>
+          </nav>
+
+          <div class="flex items-start gap-4">
+            <span class="flex h-16 w-16 items-center justify-center rounded-[1.4rem] border border-[var(--line)] bg-white shadow-[var(--shadow-md)]">
+              <ServiceIcon iconId={service.iconId} name={service.name} size={40} />
+            </span>
+            <div class="min-w-0">
+              <div class="flex flex-wrap items-center gap-3">
+                <span class="site-chip site-chip--accent">{categoryLabel}</span>
+                {!service.enabled && <span class="site-chip site-chip--warn">Opt-in</span>}
+              </div>
+              <h1 class="mt-4 max-w-[12ch]">{service.name}</h1>
+            </div>
+          </div>
+
+          <p class="mt-6 max-w-[40rem] text-lg leading-8 text-[var(--text-2)] sm:text-xl">
+            {service.description}
+          </p>
+
+          <div class="mt-8 grid gap-4 sm:grid-cols-3">
+            <article class="site-panel site-panel--soft p-5">
+              <div class="text-3xl font-semibold tracking-[-0.08em] text-[var(--text)]">{service.supported.length}</div>
+              <div class="mt-2 font-mono text-[0.7rem] uppercase tracking-[0.14em] text-[var(--accent-strong)]">Supported</div>
+              <p class="mt-3 text-sm leading-7 text-[var(--text-2)]">Capabilities you can exercise locally today.</p>
+            </article>
+            <article class="site-panel site-panel--soft p-5">
+              <div class="text-3xl font-semibold tracking-[-0.08em] text-[var(--text)]">{service.notSupported.length}</div>
+              <div class="mt-2 font-mono text-[0.7rem] uppercase tracking-[0.14em] text-[var(--accent-strong)]">Gaps</div>
+              <p class="mt-3 text-sm leading-7 text-[var(--text-2)]">Known gaps and behaviors that are not there yet.</p>
+            </article>
+            <article class="site-panel site-panel--soft p-5">
+              <div class="text-2xl font-semibold tracking-[-0.05em] text-[var(--text)]">{service.port}</div>
+              <div class="mt-2 font-mono text-[0.7rem] uppercase tracking-[0.14em] text-[var(--accent-strong)]">Port / Protocol</div>
+              <p class="mt-3 text-sm leading-7 text-[var(--text-2)]">{service.protocol}</p>
+            </article>
+          </div>
+        </div>
+
+        <aside class="site-panel p-5 reveal sm:p-6">
+          <div class="flex items-center justify-between gap-3">
+            <span class="site-kicker">Connection</span>
+            <CopyButton text={service.envVar} />
+          </div>
+
+          <div class="mt-4 rounded-[1.25rem] border border-[var(--line)] bg-[var(--surface-2)] p-4">
+            <p class="site-micro">Environment Variable</p>
+            <code class="mt-3 block break-all border-0 bg-transparent p-0 text-[0.92rem] leading-7 text-[var(--accent-strong)]">
+              {service.envVar}
+            </code>
+          </div>
+
+          <div class="mt-4 rounded-[1.25rem] border border-[var(--line)] bg-[var(--surface-2)] p-4">
+            <p class="site-micro">Service Snapshot</p>
+            <ul class="site-list mt-4">
+              <li>Category: {categoryLabel}.</li>
+              <li>Implementation: {getServiceImplementationLabel(service)}. {getServiceImplementationNote(service)}</li>
+              <li>{service.enabled ? 'Available in the default container boot.' : 'Requires opt-in runtime access because it depends on Docker-backed behavior.'}</li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="site-section">
+      <div class="container">
+        <div class="site-section-heading reveal">
+          <span class="site-kicker">Support Matrix</span>
+          <h2>Clear local behavior boundaries.</h2>
+          <p>This page is meant to answer the practical question quickly: what can you rely on when you point your SDK at LocalCloud?</p>
+        </div>
+
+        <div class="grid gap-4 lg:grid-cols-2">
+          <section class="site-panel p-6 reveal">
+            <div class="flex items-center justify-between gap-3">
+              <h3>Supported Today</h3>
+              <span class="site-chip site-chip--success">{service.supported.length} items</span>
+            </div>
+            <ul class="site-list site-list--success mt-5">
+              {service.supported.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          </section>
+
+          <section class="site-panel site-panel--soft p-6 reveal">
+            <div class="flex items-center justify-between gap-3">
+              <h3>Not Yet Supported</h3>
+              <span class="site-chip site-chip--accent">{service.notSupported.length} items</span>
+            </div>
+            <ul class="site-list mt-5">
+              {service.notSupported.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <section class="site-section site-section--tight">
+      <div class="container">
+        <div class="site-panel p-6 reveal sm:p-8">
+          <div class="grid gap-6 lg:grid-cols-[1fr,auto] lg:items-end">
+            <div>
+              <span class="site-kicker">Next Step</span>
+              <h2 class="mt-3 max-w-[14ch]">Move from service detail back into setup or the broader catalog.</h2>
+              <p class="mt-4 max-w-[38rem] text-base leading-8 text-[var(--text-2)]">
+                Use the docs when you need environment setup or console workflow help, or return to the catalog to compare support coverage across services.
+              </p>
+            </div>
+
+            <div class="flex flex-col gap-3 sm:flex-row">
+              <a href={`${base}services/`} class="site-button site-button--secondary">All Services</a>
+              <a href={`${base}docs/`} class="site-button site-button--primary">Open Docs</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>

@@ -1,0 +1,83 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: Web Console
+description: Built-in GCP Console-inspired interface for managing LocalCloud services.
+---
+
+# Web Console
+
+LocalCloud includes a built-in web console at `http://localhost:8080`. It is served directly by the running LocalCloud container, so the console is available as soon as the gateway is healthy.
+
+## Dashboard
+
+The dashboard is the fastest way to confirm the local runtime is ready:
+
+- **Service health grid** — green/red/yellow status indicators for each service
+- **Project info and uptime** — current project ID and container uptime
+- **Request counts** — per-service API call counts
+- **Quick actions** — Refresh, Reset All, Export environment variables
+
+## Service Explorer
+
+Deep-dive into individual services with built-in tooling:
+
+### BigQuery & Spanner
+- **SQL Editor** — write and execute queries with schema browsing
+- **Resizable editor panels** — drag to resize the query editor and results
+- **Schema detection** — browse datasets, tables, and column types
+
+### Cloud Storage
+- **File browser** — navigate buckets and folders in a tree view
+- **File preview** — click any object to view its contents
+- **Folder expansion** — drill into nested path structures
+
+### Memorystore (Redis)
+- **Key browser** — list all keys with type and TTL display
+- **Filtering** — search and filter keys by pattern
+- **Value preview** — view string, hash, list, set, and sorted set values
+
+## Data Browser
+
+Read-only preview across all services:
+
+| Service | What You Can Browse |
+|---------|-------------------|
+| Firestore | Collections and document JSON |
+| BigQuery | Datasets, table schemas, sample rows |
+| Cloud Storage | Buckets and object listings |
+| Spanner | Instances, databases, table details |
+| Secret Manager | Secret names (values redacted) |
+| Pub/Sub | Topics and subscription status |
+| Memorystore | Keys with types and TTL |
+
+## Logs Viewer
+
+Real-time request log viewer:
+
+- **Auto-tail** — configurable refresh interval (1–60 seconds)
+- **Service filtering** — show logs for specific services only
+- **Color-coded status** — HTTP status codes are color-coded for quick scanning
+
+## Usage & Cost Savings
+
+Track your local development impact:
+
+- **API request counts** per service
+- **Estimated GCP cost savings** from local development
+- **Pricing reference** — see what each API call would cost on real GCP
+
+## Settings
+
+Configure the console and export configuration:
+
+- **Auto-refresh interval** — control how often the dashboard updates
+- **Environment export** — copy env vars in shell, Docker Compose, or JSON format
+- **SDK setup examples** — ready-to-paste code for Python and Node.js
+
+## Opening the Console
+
+```bash
+open http://localhost:8080
+```
+
+The console is served directly by the Armeria gateway — no separate process needed.

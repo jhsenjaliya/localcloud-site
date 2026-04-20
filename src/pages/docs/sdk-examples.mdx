@@ -1,0 +1,203 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: SDK Examples
+description: Code examples for connecting to LocalCloud with Python, Node.js, Go, and Java.
+---
+
+# SDK Examples
+
+Your existing GCP SDK code works with LocalCloud — just set environment variables. Below are examples for the most common services.
+
+## Cloud Storage
+
+### Python
+
+```python
+from google.cloud import storage
+
+client = storage.Client(project="local-project")
+
+# Create bucket and upload
+bucket = client.create_bucket("my-bucket")
+blob = bucket.blob("data.txt")
+blob.upload_from_string("Hello from LocalCloud!")
+print(blob.download_as_text())
+```
+
+### Node.js
+
+```javascript
+const { Storage } = require("@google-cloud/storage");
+
+const storage = new Storage({ projectId: "local-project" });
+
+async function main() {
+  await storage.createBucket("my-bucket");
+  const bucket = storage.bucket("my-bucket");
+  await bucket.file("data.txt").save("Hello from LocalCloud!");
+  const [content] = await bucket.file("data.txt").download();
+  console.log(content.toString());
+}
+main();
+```
+
+### Go
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "io"
+
+    "cloud.google.com/go/storage"
+)
+
+func main() {
+    ctx := context.Background()
+    client, _ := storage.NewClient(ctx)
+    defer client.Close()
+
+    bucket := client.Bucket("my-bucket")
+    bucket.Create(ctx, "local-project", nil)
+
+    w := bucket.Object("data.txt").NewWriter(ctx)
+    fmt.Fprint(w, "Hello from LocalCloud!")
+    w.Close()
+
+    r, _ := bucket.Object("data.txt").NewReader(ctx)
+    data, _ := io.ReadAll(r)
+    fmt.Println(string(data))
+}
+```
+
+### Java
+
+```java
+import com.google.cloud.storage.*;
+
+public class Example {
+    public static void main(String[] args) {
+        Storage storage = StorageOptions.newBuilder()
+            .setProjectId("local-project")
+            .build().getService();
+
+        storage.create(BucketInfo.of("my-bucket"));
+
+        BlobId blobId = BlobId.of("my-bucket", "data.txt");
+        storage.create(BlobInfo.newBuilder(blobId).build(),
+            "Hello from LocalCloud!".getBytes());
+
+        byte[] content = storage.readAllBytes(blobId);
+        System.out.println(new String(content));
+    }
+}
+```
+
+## Pub/Sub
+
+### Python
+
+```python
+from google.cloud import pubsub_v1
+
+publisher = pubsub_v1.PublisherClient()
+subscriber = pubsub_v1.SubscriberClient()
+
+topic_path = publisher.topic_path("local-project", "my-topic")
+sub_path = subscriber.subscription_path("local-project", "my-sub")
+
+# Create topic and subscription
+publisher.create_topic(request={"name": topic_path})
+subscriber.create_subscription(request={"name": sub_path, "topic": topic_path})
+
+# Publish
+publisher.publish(topic_path, b"Hello, Pub/Sub!")
+
+# Pull
+response = subscriber.pull(request={"subscription": sub_path, "max_messages": 10})
+for msg in response.received_messages:
+    print(msg.message.data.decode())
+    subscriber.acknowledge(request={"subscription": sub_path, "ack_ids": [msg.ack_id]})
+```
+
+### Node.js
+
+```javascript
+const { PubSub } = require("@google-cloud/pubsub");
+
+const pubsub = new PubSub({ projectId: "local-project" });
+
+async function main() {
+  const [topic] = await pubsub.createTopic("my-topic");
+  const [subscription] = await topic.createSubscription("my-sub");
+
+  await topic.publishMessage({ data: Buffer.from("Hello, Pub/Sub!") });
+
+  subscription.on("message", (message) => {
+    console.log(message.data.toString());
+    message.ack();
+  });
+}
+main();
+```
+
+## BigQuery
+
+### Python
+
+```python
+from google.cloud import bigquery
+
+client = bigquery.Client(project="local-project")
+
+# Create dataset and table
+client.create_dataset("analytics")
+schema = [
+    bigquery.SchemaField("name", "STRING"),
+    bigquery.SchemaField("age", "INTEGER"),
+]
+table = bigquery.Table("local-project.analytics.users", schema=schema)
+client.create_table(table)
+
+# Insert and query
+rows = [{"name": "Alice", "age": 30}, {"name": "Bob", "age": 25}]
+client.insert_rows_json("local-project.analytics.users", rows)
+
+query = "SELECT name, age FROM analytics.users WHERE age > 20"
+for row in client.query(query):
+    print(f"{row.name}: {row.age}")
+```
+
+### Node.js
+
+```javascript
+const { BigQuery } = require("@google-cloud/bigquery");
+
+const bigquery = new BigQuery({ projectId: "local-project" });
+
+async function main() {
+  await bigquery.createDataset("analytics");
+  const [rows] = await bigquery.query("SELECT 1 + 1 AS result");
+  console.log(rows);
+}
+main();
+```
+
+## Environment Setup
+
+Remember to set the emulator environment variables before running any examples:
+
+```bash
+eval "$(curl -s http://localhost:8080/_localcloud/env?format=shell)"
+```
+
+Or set them manually:
+
+```bash
+export STORAGE_EMULATOR_HOST=http://localhost:4443
+export PUBSUB_EMULATOR_HOST=localhost:8085
+export BIGQUERY_EMULATOR_HOST=http://localhost:9050
+export GOOGLE_CLOUD_PROJECT=local-project
+```

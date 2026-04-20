@@ -1,0 +1,286 @@
+---
+import CopyButton from './CopyButton.astro';
+import HeroSceneCarousel from './HeroSceneCarousel.astro';
+import ServiceIcon from './ServiceIcon.astro';
+import { getServiceImplementationLabel, services } from '../data/services';
+
+const rawBase = import.meta.env.BASE_URL;
+const base = rawBase.endsWith('/') ? rawBase : rawBase + '/';
+
+const enabledServices = services.filter((service) => service.enabled);
+const emulatorServices = enabledServices.filter((service) => service.type === 'external');
+const dockerCmd = 'docker pull jaysen2apache/localcloud && docker run -d -p 8080:8080 -p 4443:4443 -p 8085-8087:8085-8087 -p 9010:9010 -p 9050:9050 -p 6379:6379 -m 4g --name localcloud jaysen2apache/localcloud';
+
+const proofSignals = [
+  {
+    value: `${enabledServices.length}`,
+    label: 'Service Readiness',
+    note: 'The default boot path brings up the core surface area most teams need first.',
+  },
+  {
+    value: '<10m',
+    label: 'Time To First Call',
+    note: 'Pull the image, run one container, export env vars, and start validating behavior.',
+  },
+  {
+    value: '$0',
+    label: 'Cloud Spend',
+    note: 'Local iteration stays off shared projects until you are ready to switch traffic back.',
+  },
+  {
+    value: 'No fork',
+    label: 'Time To Market',
+    note: 'Keep the same SDK codepaths instead of carrying a separate mock-only application branch.',
+  },
+];
+
+const narrativeCards = [
+  {
+    eyebrow: 'Use Mature Emulator Paths',
+    title: 'Google official, extended, or custom where it fits best.',
+    body: 'Pub/Sub, Firestore, and Bigtable use Google official emulators, Spanner wraps and extends the official emulator path, and BigQuery runs on a custom DuckDB-based emulator.',
+  },
+  {
+    eyebrow: 'Fill The Product Gaps',
+    title: 'Facades where the platform leaves holes.',
+    body: 'Secret Manager, Cloud Tasks, Logging, Monitoring, Memorystore, and Workflows stay on the same local platform instead of forcing extra mocks.',
+  },
+  {
+    eyebrow: 'Keep The Same Code',
+    title: 'Swap targets, not application paths.',
+    body: 'Point existing clients at localhost with emulator environment variables instead of branching your code or carrying a pile of ad hoc stubs.',
+  },
+];
+
+const workflowPanels = [
+  {
+    title: 'Pull one image',
+    body: 'Start from a single image instead of piecing together emulator processes by hand.',
+    kicker: '01',
+  },
+  {
+    title: 'Run one container',
+    body: 'Boot the default LocalCloud footprint with a single command and a predictable port map.',
+    kicker: '02',
+  },
+  {
+    title: 'Inspect the results',
+    body: 'Verify service behavior, logs, and support boundaries before you switch traffic back to GCP.',
+    kicker: '03',
+  },
+];
+---
+
+<main id="main-content" class="site-page">
+  <section class="site-section site-section--hero">
+    <div class="container grid gap-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:items-center">
+      <div class="reveal">
+        <div class="site-eyebrow">
+          <span class="site-eyebrow__pulse"></span>
+          {services.length} services · single container · zero cloud dev cost
+        </div>
+
+        <h1 class="mt-6 max-w-[8ch]">Google Cloud, in a box.</h1>
+        <p class="mt-6 max-w-[39rem] text-lg leading-8 text-[var(--text-2)] sm:text-xl">
+          Run the most used GCP services locally in one container, keep your existing SDK codepaths, and validate behavior before your team burns cloud time.
+        </p>
+
+        <div class="mt-8 flex flex-col gap-4 sm:flex-row">
+          <a href="#quickstart" class="site-button site-button--primary">Copy the Quick Start</a>
+          <a href={`${base}docs/`} class="site-button site-button--secondary">Read the Docs</a>
+        </div>
+
+        <a href="https://github.com/LocalStack-Google/localcloud-site" target="_blank" rel="noopener noreferrer" class="site-inline-link mt-5">
+          GitHub for source, issues, and release context
+        </a>
+      </div>
+
+      <HeroSceneCarousel />
+    </div>
+  </section>
+
+  <section class="site-section site-section--tight" id="quickstart">
+    <div class="container grid gap-6 xl:grid-cols-[0.78fr,1.22fr] xl:items-stretch">
+      <div class="site-panel site-panel--soft p-6 reveal">
+        <span class="site-kicker">Quick Start</span>
+        <h2 class="mt-3 max-w-[12ch]">Copy, run, and point your SDKs locally.</h2>
+        <p class="mt-4 max-w-[34rem] text-base leading-8 text-[var(--text-2)]">
+          The install path sits immediately under the hero so developers can land, scan the promise, and copy the command without hunting through the rest of the page.
+        </p>
+
+        <div class="mt-6 grid gap-3">
+          <div class="rounded-2xl border border-[var(--line)] bg-white px-4 py-3 font-medium text-[var(--text)]">One image pull</div>
+          <div class="rounded-2xl border border-[var(--line)] bg-white px-4 py-3 font-medium text-[var(--text)]">One container boot</div>
+          <div class="rounded-2xl border border-[var(--line)] bg-white px-4 py-3 font-medium text-[var(--text)]">One env handoff to your SDKs</div>
+        </div>
+      </div>
+
+      <div class="site-panel overflow-hidden reveal">
+        <div class="flex items-center justify-between gap-3 px-4 pt-4 sm:px-5">
+          <span class="site-kicker">Docker</span>
+          <CopyButton text={dockerCmd} />
+        </div>
+        <pre class="mt-3 border-0 bg-transparent"><code>docker pull jaysen2apache/localcloud
+
+docker run -d \
+  -p 8080:8080 -p 4443:4443 \
+  -p 8085-8087:8085-8087 \
+  -p 9010:9010 -p 9050:9050 -p 6379:6379 \
+  -m 4g --name localcloud \
+  jaysen2apache/localcloud
+
+eval "$(curl -s localhost:8080/_localcloud/env?format=shell)"</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <section class="site-section" id="proof">
+    <div class="container grid gap-6 xl:grid-cols-[0.85fr,1.15fr]">
+      <div class="reveal">
+        <div class="site-section-heading mb-0">
+          <span class="site-kicker">Operational Proof</span>
+          <h2>Explain the payoff on the left. Show the runtime surface on the right.</h2>
+          <p>The homepage now separates the why from the what: value signals stay readable, while the concrete service footprint stays visible in a proof pane beside it.</p>
+        </div>
+
+        <div class="mt-6 rounded-[1.6rem] border border-[var(--line)] bg-[linear-gradient(180deg,rgba(255,255,255,0.96),rgba(246,250,255,0.92))] p-5 shadow-[var(--shadow-md)]">
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="site-chip site-chip--success">{enabledServices.length} services enabled by default</span>
+            <span class="site-chip site-chip--accent">{emulatorServices.length} external emulator paths in the mix</span>
+            <span class="site-chip site-chip--warn">localhost-first workflow</span>
+          </div>
+
+          <p class="mt-4 max-w-[34rem] text-base leading-8 text-[var(--text-2)]">
+            The left side carries the business case for developers and teams: faster readiness, lower iteration cost, shorter setup time, and no need to branch application behavior just to test locally.
+          </p>
+
+          <div class="mt-5 grid gap-3">
+            {proofSignals.map((signal) => (
+              <article class="grid gap-3 rounded-[1.2rem] border border-[var(--line)] bg-white/85 p-4 sm:grid-cols-[auto,1fr] sm:items-start">
+                <div class="text-3xl font-semibold tracking-[-0.08em] text-[var(--text)]">{signal.value}</div>
+                <div>
+                  <div class="font-mono text-[0.68rem] uppercase tracking-[0.14em] text-[var(--accent-strong)]">{signal.label}</div>
+                  <p class="mt-2 text-sm leading-7 text-[var(--text-2)]">{signal.note}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          <div class="mt-4 rounded-[1.2rem] border border-[var(--line)] bg-white px-4 py-3">
+            <div class="font-mono text-[0.68rem] uppercase tracking-[0.14em] text-[var(--accent-strong)]">SDK Handoff</div>
+            <div class="mt-2 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+              <p class="text-sm leading-7 text-[var(--text-2)]">Export localhost endpoints directly from the running runtime instead of maintaining manual per-service setup notes.</p>
+              <code class="border-0 bg-transparent p-0 text-[0.8rem] text-[var(--accent-strong)]">/_localcloud/env?format=shell</code>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <div class="site-panel p-5 sm:p-6">
+          <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <span class="site-kicker">Visible Runtime Surface</span>
+              <h3 class="mt-2 text-[1.45rem]">Services, tags, and transport details at a glance.</h3>
+            </div>
+            <span class="site-chip site-chip--success">{enabledServices.length} default-on services</span>
+          </div>
+
+          <p class="mt-4 text-sm leading-7 text-[var(--text-2)]">
+            Keep the proof pane concrete on the homepage: each row shows the service, its protocol, port surface, and whether it is backed by a Google, extended, custom, or LocalCloud-managed implementation.
+          </p>
+
+          <div class="mt-5 grid gap-3 sm:grid-cols-2">
+            {enabledServices.map((service) => (
+              <article class="rounded-[1.2rem] border border-[var(--line)] bg-[var(--surface-2)] p-4">
+                <div class="flex items-start gap-3">
+                  <span class="mt-0.5 flex h-11 w-11 flex-none items-center justify-center rounded-2xl bg-white shadow-[inset_0_1px_0_rgba(255,255,255,0.72)]">
+                    <ServiceIcon iconId={service.iconId} name={service.name} size={26} />
+                  </span>
+                  <div class="min-w-0 flex-1">
+                    <div class="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+                      <div class="min-w-0">
+                        <div class="truncate text-base font-semibold text-[var(--text)]">{service.name}</div>
+                        <p class="mt-1 text-sm leading-6 text-[var(--text-3)]">{service.description}</p>
+                      </div>
+                      <span class="inline-flex flex-none items-center rounded-full border border-[rgba(44,114,246,0.14)] bg-white px-2.5 py-1 font-mono text-[0.68rem] uppercase tracking-[0.1em] text-[var(--text-3)]">
+                        default on
+                      </span>
+                    </div>
+
+                    <div class="mt-3 flex flex-wrap gap-2">
+                      <span class:list={['site-chip', service.type === 'external' ? 'site-chip--success' : 'site-chip--accent']}>
+                        {getServiceImplementationLabel(service)}
+                      </span>
+                      <span class="inline-flex items-center rounded-full border border-[rgba(44,114,246,0.14)] bg-white px-2.5 py-1 font-mono text-[0.66rem] uppercase tracking-[0.1em] text-[var(--accent-strong)]">
+                        {service.protocol}
+                      </span>
+                      <span class="inline-flex items-center rounded-full border border-[rgba(191,209,234,0.92)] bg-white px-2.5 py-1 font-mono text-[0.66rem] uppercase tracking-[0.1em] text-[var(--text-3)]">
+                        :{service.port}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          <div class="mt-4 flex items-center justify-between gap-3 rounded-[1.2rem] border border-[var(--line)] bg-[#f9fbfe] px-4 py-3">
+            <p class="text-sm text-[var(--text-2)]">Need deeper support boundaries, unsupported edges, or examples?</p>
+            <a href={`${base}services/`} class="site-inline-link whitespace-nowrap">Open full service catalog</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="site-section">
+    <div class="container">
+      <div class="site-section-heading reveal">
+        <span class="site-kicker">Why LocalCloud Works</span>
+        <h2>Best emulator path where possible. Facades where needed.</h2>
+      </div>
+
+      <div class="grid gap-4 lg:grid-cols-3 stagger">
+        {narrativeCards.map((card) => (
+          <article class="site-panel p-6 reveal">
+            <span class="site-micro text-[var(--accent-strong)]">{card.eyebrow}</span>
+            <h3 class="mt-3">{card.title}</h3>
+            <p class="mt-4 text-base leading-8 text-[var(--text-2)]">{card.body}</p>
+          </article>
+        ))}
+      </div>
+
+      <div class="mt-4 grid gap-4 lg:grid-cols-3 stagger">
+        {workflowPanels.map((panel) => (
+          <article class="site-panel site-panel--soft reveal p-6">
+            <div class="text-5xl font-semibold tracking-[-0.08em] text-[rgba(44,114,246,0.32)]">{panel.kicker}</div>
+            <h3 class="mt-4">{panel.title}</h3>
+            <p class="mt-4 text-base leading-8 text-[var(--text-2)]">{panel.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="site-section">
+    <div class="container">
+      <div class="site-panel p-6 reveal sm:p-8">
+        <div class="grid gap-6 lg:grid-cols-[1fr,auto] lg:items-end">
+          <div>
+            <span class="site-kicker">Final CTA</span>
+            <h2 class="mt-3 max-w-[14ch]">Run LocalCloud in minutes, then review the support edges in docs.</h2>
+            <p class="mt-4 max-w-[38rem] text-base leading-8 text-[var(--text-2)]">
+              Start with the quickstart, validate the supported surface area, and use the docs when you want the deeper architecture and configuration detail.
+            </p>
+          </div>
+
+          <div class="flex flex-col gap-3 sm:flex-row">
+            <a href={`${base}docs/`} class="site-button site-button--primary">Open Setup Guide</a>
+            <a href={`${base}services/`} class="site-button site-button--secondary">Browse Services</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

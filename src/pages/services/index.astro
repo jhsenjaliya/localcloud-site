@@ -1,0 +1,161 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import ServiceIcon from '../../components/ServiceIcon.astro';
+import { serviceCategoryMeta, serviceCategoryOrder, services } from '../../data/services';
+
+const rawBase = import.meta.env.BASE_URL;
+const base = rawBase.endsWith('/') ? rawBase : rawBase + '/';
+
+const categoryGroups = serviceCategoryOrder
+  .map((category) => ({
+    id: category,
+    title: serviceCategoryMeta[category].label,
+    description: serviceCategoryMeta[category].description,
+    items: services.filter((service) => service.category === category),
+  }))
+  .filter((group) => group.items.length > 0);
+
+const optIn = services.filter((service) => !service.enabled);
+
+const catalogStats = [
+  {
+    value: `${categoryGroups.length}`,
+    label: 'Product Categories',
+    note: 'Grouped the way Google Cloud teams already scan the platform.',
+  },
+  {
+    value: '< 1 min',
+    label: 'Default Boot Path',
+    note: 'Pull the image, start the container, export the env block, and begin testing locally.',
+  },
+  {
+    value: `${optIn.length}`,
+    label: 'Opt-in Runtime Services',
+    note: 'Compute-oriented surfaces stay clearly marked when Docker-backed behavior is required.',
+  },
+];
+---
+
+<BaseLayout title="Services — LocalCloud" description="Major Google Cloud services organized by product category for local development.">
+  <Header />
+
+  <main id="main-content" class="site-page">
+    <section class="site-section site-section--hero">
+      <div class="container grid gap-8 xl:grid-cols-[1fr,0.9fr]">
+        <div class="reveal">
+          <span class="site-eyebrow">
+            <span class="site-eyebrow__pulse"></span>
+            Service Catalog
+          </span>
+          <h1 class="mt-6 max-w-[12ch]">Major Google Cloud services, organized the way teams use them.</h1>
+          <p class="mt-6 max-w-[44rem] text-lg leading-8 text-[var(--text-2)] sm:text-xl">
+            Browse LocalCloud through storage, databases, analytics, messaging, security, operations, and compute. The goal of this page is
+            fast orientation: what category a service belongs to, whether it is default-on or opt-in, and where to click for supported behavior.
+          </p>
+
+          <div class="mt-8 grid gap-4 sm:grid-cols-3">
+            {catalogStats.map((stat) => (
+              <article class="site-panel site-panel--soft p-5">
+                <div class="text-4xl font-semibold tracking-[-0.08em] text-[var(--text)]">{stat.value}</div>
+                <div class="mt-2 font-mono text-[0.7rem] uppercase tracking-[0.14em] text-[var(--accent-strong)]">{stat.label}</div>
+                <p class="mt-3 text-sm leading-7 text-[var(--text-2)]">{stat.note}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+
+        <aside class="site-panel p-5 reveal sm:p-6">
+          <div class="flex items-center justify-between gap-3">
+            <span class="site-kicker">How To Read This Page</span>
+            <a href={`${base}docs/`} class="site-inline-link">Open setup docs</a>
+          </div>
+
+          <div class="mt-4 grid gap-3">
+            <div class="rounded-2xl border border-[var(--line)] bg-[var(--surface-2)] p-4">
+              <div class="flex items-center justify-between gap-3">
+                <strong class="text-base text-[var(--text)]">Grouped Like Google Cloud</strong>
+                <span class="site-chip site-chip--accent">Category-first</span>
+              </div>
+              <p class="mt-3 text-sm leading-7 text-[var(--text-2)]">
+                The catalog is organized by product area so teams can scan storage, databases, analytics, integration, security, operations,
+                and compute without needing to know implementation details first.
+              </p>
+            </div>
+
+            <div class="rounded-2xl border border-[var(--line)] bg-[var(--surface-2)] p-4">
+              <div class="flex items-center justify-between gap-3">
+                <strong class="text-base text-[var(--text)]">Default-on Vs Opt-in</strong>
+                <span class="site-chip site-chip--success">Runtime status</span>
+              </div>
+              <p class="mt-3 text-sm leading-7 text-[var(--text-2)]">
+                Cards show whether a service is ready in the default boot path or whether it needs opt-in runtime access because it depends on Docker-backed behavior.
+              </p>
+            </div>
+
+            <div class="rounded-2xl border border-[var(--line)] bg-[var(--surface-2)] p-4">
+              <div class="flex items-center justify-between gap-3">
+                <strong class="text-base text-[var(--text)]">Detail Pages Hold The Depth</strong>
+                <span class="site-chip site-chip--warn">Per service</span>
+              </div>
+              <p class="mt-3 text-sm leading-7 text-[var(--text-2)]">
+                Open any service page for the exact connection info, supported capabilities, current gaps, and a brief note on how that service is implemented locally.
+              </p>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    {categoryGroups.map((group) => (
+      <section class="site-section site-section--tight">
+        <div class="container">
+          <div class="site-section-heading reveal">
+            <span class="site-kicker">{group.title}</span>
+            <h2>{group.title} services for local development.</h2>
+            <p>{group.description}</p>
+          </div>
+
+          <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3 stagger">
+            {group.items.map((service) => (
+              <a
+                href={`${base}services/${service.slug}/`}
+                class:list={[
+                  'site-panel reveal p-5 transition-transform hover:-translate-y-0.5',
+                  !service.enabled && 'site-panel--soft',
+                ]}
+              >
+                <div class="flex items-start justify-between gap-3">
+                  <div class="flex min-w-0 items-start gap-3">
+                    <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--surface-2)]">
+                      <ServiceIcon iconId={service.iconId} name={service.name} size={30} />
+                    </span>
+                    <div class="min-w-0">
+                      <h3 class="text-xl">{service.name}</h3>
+                      <div class="mt-2 font-mono text-[0.72rem] uppercase tracking-[0.12em] text-[var(--text-3)]">
+                        {service.protocol} · {service.port}
+                      </div>
+                    </div>
+                  </div>
+                  <span class:list={['site-chip', service.enabled ? 'site-chip--success' : 'site-chip--warn']}>
+                    {service.enabled ? 'Default-on' : 'Opt-in'}
+                  </span>
+                </div>
+
+                <p class="mt-4 text-sm leading-7 text-[var(--text-2)]">{service.description}</p>
+
+                <div class="mt-5 flex items-center justify-between gap-3 text-sm text-[var(--text-3)]">
+                  <span>{service.supported.length} supported capabilities</span>
+                  <span class="text-[var(--text)]">Details</span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    ))}
+  </main>
+
+  <Footer />
+</BaseLayout>

@@ -1,0 +1,96 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: Architecture
+description: How LocalCloud works — gateway, emulators, facades, and ports.
+---
+
+# Architecture
+
+LocalCloud runs everything inside a single Docker container. Here's how the pieces fit together.
+
+## Overview
+
+<div class="docs-visual-grid docs-visual-grid--architecture">
+  <figure class="docs-visual docs-visual--feature">
+    <img
+      src="/localcloud-site/illustrations/runtime-overview.svg"
+      alt="Architecture overview showing LocalCloud's single Docker container with the Armeria gateway, facade services, external emulator processes, and PostgreSQL-backed persistence."
+    />
+    <figcaption>Single-container runtime layout with the gateway, external emulator processes, built-in facades, and persistence layers.</figcaption>
+  </figure>
+
+  <figure class="docs-visual docs-visual--secondary">
+    <img
+      src="/localcloud-site/illustrations/request-flow.svg"
+      alt="Request flow showing SDKs and the web console routing through LocalCloud environment handoff into the gateway, then into emulators and facade services."
+    />
+    <figcaption>The routing path from your app's existing SDK calls into LocalCloud's localhost targets.</figcaption>
+  </figure>
+</div>
+
+## Components
+
+### Armeria Gateway
+
+The central gateway built with [Armeria](https://armeria.dev/) (Java HTTP/gRPC framework). It handles:
+
+- **Admin API** — REST endpoints at `/_localcloud/` for health, status, seed data, and configuration
+- **Web Console** — A Solid.js SPA served at the root, providing a GCP Console-like interface
+- **Facade Services** — gRPC/REST implementations for services without dedicated emulators (Secret Manager, Cloud Tasks, Logging, Monitoring, Workflows, GKE, Compute Engine, Cloud Run)
+- **Memorystore** — RESP2 (Redis protocol) handler via Netty codec-redis on port 6379
+
+### External Emulators
+
+Where high-quality emulators exist, LocalCloud delegates to them:
+
+| Emulator | Source | Port |
+|----------|--------|------|
+| fake-gcs-server | Community (Go) | 4443 |
+| Pub/Sub | Google official emulator | 8085 |
+| Firestore | Google official emulator | 8086 |
+| Bigtable | Google official emulator | 8087 |
+| Spanner | Extended emulator built around the official Spanner emulator | 9010 |
+| BigQuery | Custom emulator built on DuckDB + SQLGlot | 9050 |
+
+These run as separate processes managed by [supervisord](http://supervisord.org/).
+
+### Facade Services
+
+For services without existing emulators, LocalCloud implements Java facades:
+
+- **Secret Manager** — Full CRUD for secrets and versions
+- **Cloud Tasks** — Queue management with HTTP task dispatch and retries
+- **Cloud Logging** — Sink-mode log ingestion and listing
+- **Cloud Monitoring** — Time series ingestion and querying
+- **Memorystore** — RESP2 protocol over Netty, backed by PostgreSQL
+- **Cloud Workflows** — Full YAML expression engine with stdlib and connector shims
+- **GKE** — Cluster CRUD via k3d (requires Docker socket)
+- **Compute Engine** — Instance CRUD using Docker containers as VMs
+- **Cloud Run** — Service/revision management with real Docker containers
+
+### PostgreSQL
+
+An internal PostgreSQL 17 instance provides persistence for all facade services. GCS blobs are stored on the filesystem; all other data uses PostgreSQL tables.
+
+## Docker Image
+
+- **Base**: `debian:trixie-slim`
+- **JRE**: Custom Java 25 built via `jlink` (~72 MB)
+- **Architectures**: Native `arm64` (Apple Silicon) and `amd64`
+- **Memory**: Requires `-m 4g` for stable full operation
+- **No gcloud SDK**: All emulators run as direct JAR/binary execution
+
+## Port Map
+
+| Port | Service |
+|------|---------|
+| 8080 | Gateway (Admin, Console, Facades) |
+| 4443 | Cloud Storage |
+| 8085 | Pub/Sub |
+| 8086 | Firestore |
+| 8087 | Bigtable |
+| 9010 | Spanner (gRPC) |
+| 9020 | Spanner (REST) |
+| 9050 | BigQuery (REST) |
+| 9060 | BigQuery (gRPC Storage API) |
+| 6379 | Memorystore (Redis) |

@@ -1,0 +1,114 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: Getting Started
+description: Get LocalCloud running in less than 1 minute.
+---
+
+# Getting Started
+
+Get LocalCloud up and running in less than 1 minute. By the end of this guide, you'll have the major Google Cloud services your team reaches for first running locally, plus the environment export and console you need to verify the stack quickly.
+
+No cloud access. No credentials. No cloud costs.
+
+## Prerequisites
+
+- **Docker** — [Install Docker](https://docs.docker.com/get-docker/) (20.10+)
+- **Homebrew install on macOS** — if you use Homebrew, Docker Desktop is available as:
+
+```bash
+brew install --cask docker-desktop
+```
+
+- **4GB RAM** available for the container
+
+## Quick Start
+
+### 1. Pull the image
+
+```bash
+docker pull jaysen2apache/localcloud
+```
+
+### 2. Start LocalCloud
+
+```bash
+docker run -d \
+  -p 8080:8080 -p 4443:4443 \
+  -p 8085-8087:8085-8087 \
+  -p 9010:9010 -p 9050:9050 -p 6379:6379 \
+  -m 4g --name localcloud \
+  jaysen2apache/localcloud
+```
+
+### 3. Configure your SDK
+
+Set environment variables so your GCP SDKs connect to LocalCloud:
+
+```bash
+eval "$(curl -s http://localhost:8080/_localcloud/env?format=shell)"
+```
+
+This sets variables like `STORAGE_EMULATOR_HOST`, `PUBSUB_EMULATOR_HOST`, etc.
+
+### 4. Open the console
+
+```bash
+open http://localhost:8080
+```
+
+The console is built into the running container, so you can inspect service status, browse data, and confirm the runtime is healthy before you debug your app.
+
+## Make Your First API Call
+
+Here's a quick Python example with Cloud Storage:
+
+```python
+from google.cloud import storage
+
+client = storage.Client()
+
+# Create a bucket
+bucket = client.create_bucket("my-first-bucket")
+
+# Upload a file
+blob = bucket.blob("hello.txt")
+blob.upload_from_string("Hello, LocalCloud!")
+
+# Read it back
+print(blob.download_as_text())
+# Output: Hello, LocalCloud!
+```
+
+> **Zero code changes** — this same code works against real GCP. Just unset the emulator environment variables.
+
+## Verify Services Are Running
+
+```bash
+curl http://localhost:8080/_localcloud/health | jq
+```
+
+Or visit the web console at [http://localhost:8080](http://localhost:8080).
+
+## Persist Data
+
+Mount a volume to keep data across container restarts:
+
+```bash
+docker volume create localcloud-data
+
+docker run -d \
+  -v localcloud-data:/var/lib/localcloud \
+  -p 8080:8080 -p 4443:4443 \
+  -p 8085-8087:8085-8087 \
+  -p 9010:9010 -p 9050:9050 -p 6379:6379 \
+  -m 4g --name localcloud \
+  jaysen2apache/localcloud
+```
+
+## Next Steps
+
+- [Services](/localcloud-site/services/) — Browse major Google Cloud services by category
+- [Services Overview](/localcloud-site/docs/services-overview/) — See how LocalCloud groups major Google Cloud categories
+- [Configuration](/localcloud-site/docs/configuration/) — Environment variables and settings
+- [Seed Data](/localcloud-site/docs/seed-data/) — Pre-populate services with test data
+- [Web Console](/localcloud-site/docs/console/) — Browse data and run queries from your browser

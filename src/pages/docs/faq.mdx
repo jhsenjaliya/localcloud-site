@@ -1,0 +1,96 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: FAQ
+description: Frequently asked questions about LocalCloud.
+---
+
+# FAQ
+
+## General
+
+### What is LocalCloud?
+
+LocalCloud is a local Google Cloud runtime that brings the major Google Cloud services teams reach for first into a single Docker container. It gives you one boot path, one localhost handoff for SDKs, and a built-in console for inspecting the runtime locally.
+
+### Is LocalCloud free?
+
+Yes. LocalCloud is open source under the Apache-2.0 license. It's free to use in development, testing, and CI/CD.
+
+### How is this different from individual Google emulators?
+
+Google provides some emulator paths, but you still have to run and manage them separately. LocalCloud wraps the major services developers need into one container, exports the right localhost environment variables, exposes health and service metadata, loads seed data, and gives you a console to inspect the whole runtime in one place.
+
+## Compatibility
+
+### Do I need to change my application code?
+
+No. LocalCloud works with standard GCP SDK clients. You only change environment variables to point SDKs at localhost. Switching back to real GCP is done by unsetting those variables.
+
+### Which SDK languages are supported?
+
+Any language with GCP SDK support works: Python, Node.js, Go, Java, C#, Ruby, PHP, and more. The emulators speak the same gRPC/REST protocols as real GCP.
+
+### How complete is the BigQuery emulation?
+
+~95% of Standard SQL is supported: DQL, DDL, DML, 120+ functions, JOINs, CTEs, window functions, UNNEST, PIVOT, external tables, and the gRPC Storage API. Not yet supported: scripting (IF/LOOP), stored procedures, BQML, and geography functions.
+
+### Can I use this in CI/CD?
+
+Yes. LocalCloud runs in any environment with Docker support. Add it as a service in your CI pipeline:
+
+```yaml
+# GitHub Actions example
+services:
+  localcloud:
+    image: jaysen2apache/localcloud
+    ports:
+      - 8080:8080
+      - 4443:4443
+      - 8085-8087:8085-8087
+      - 9010:9010
+      - 9050:9050
+      - 6379:6379
+```
+
+## Performance
+
+### How much memory does LocalCloud need?
+
+Recommended: 4GB (`-m 4g`). With fewer services enabled, 2GB may suffice.
+
+### How long does it take to start?
+
+The default boot path is designed to come up in less than 1 minute on a typical development machine.
+
+### Is data persisted between restarts?
+
+Yes, if you mount a Docker volume to `/var/lib/localcloud`. Without a volume, data is lost when the container stops.
+
+## Troubleshooting
+
+### Port conflicts
+
+If a port is already in use, remap it:
+
+```bash
+docker run -d -p 9080:8080 ... jaysen2apache/localcloud
+```
+
+### Service isn't responding
+
+Check service status:
+
+```bash
+curl http://localhost:8080/_localcloud/services
+```
+
+### GKE/Compute/Cloud Run not starting
+
+These services require Docker socket access:
+
+```bash
+docker run -d \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -e LOCALCLOUD_ENABLE_GKE=true \
+  ...
+```

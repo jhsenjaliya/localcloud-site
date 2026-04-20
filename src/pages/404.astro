@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const rawBase = import.meta.env.BASE_URL;
+const base = rawBase.endsWith('/') ? rawBase : rawBase + '/';
+---
+
+<BaseLayout title="404 — Page Not Found — LocalCloud">
+  <Header />
+
+  <main id="main-content" class="site-page">
+    <section class="site-section site-section--hero">
+      <div class="container container--narrow">
+        <div class="site-panel p-8 text-center reveal sm:p-10">
+          <span class="site-eyebrow">
+            <span class="site-eyebrow__pulse"></span>
+            Not Found
+          </span>
+          <div class="mt-8 text-8xl font-semibold tracking-[-0.08em] text-[rgba(44,114,246,0.28)] sm:text-[9rem]">404</div>
+          <h1 class="mt-4">Page not found.</h1>
+          <p class="mx-auto mt-5 max-w-[34rem] text-lg leading-8 text-[var(--text-2)]">
+            The page you tried to open is missing or has moved. The rest of the LocalCloud site is still here.
+          </p>
+
+          <div class="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
+            <a href={base} class="site-button site-button--primary">Back to Home</a>
+            <a href={`${base}docs/`} class="site-button site-button--secondary">Open Docs</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>
