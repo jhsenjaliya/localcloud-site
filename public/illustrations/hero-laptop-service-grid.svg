@@ -1,131 +1,248 @@
 <svg width="1200" height="760" viewBox="0 0 1200 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <title>LocalCloud laptop service dashboard</title>
+  <desc>A polished laptop dashboard showing LocalCloud running major Google Cloud services locally with official service icons, readiness states, zero cost, and no-code-change callouts.</desc>
   <defs>
-    <linearGradient id="bg-a" x1="120" y1="80" x2="1080" y2="680" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#F8FBFF"/>
-      <stop offset="1" stop-color="#E9F2FF"/>
+    <linearGradient id="heroBg" x1="100" y1="60" x2="1100" y2="720" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FAFCFF"/>
+      <stop offset="0.52" stop-color="#EEF5FF"/>
+      <stop offset="1" stop-color="#E6F0FF"/>
     </linearGradient>
-    <linearGradient id="screen-a" x1="265" y1="140" x2="950" y2="540" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#0F2747"/>
-      <stop offset="1" stop-color="#14335D"/>
+    <linearGradient id="screen" x1="230" y1="122" x2="970" y2="560" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0D2342"/>
+      <stop offset="1" stop-color="#153A67"/>
     </linearGradient>
-    <linearGradient id="card-a" x1="0" y1="0" x2="1" y2="1">
-      <stop stop-color="#FFFFFF"/>
-      <stop offset="1" stop-color="#EAF2FF"/>
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#FFFFFF" stop-opacity="0.98"/>
+      <stop offset="1" stop-color="#EEF5FF" stop-opacity="0.95"/>
     </linearGradient>
-    <linearGradient id="accent-a" x1="0" y1="0" x2="1" y2="1">
-      <stop stop-color="#8AB4F8"/>
-      <stop offset="1" stop-color="#1A73E8"/>
+    <linearGradient id="blueRail" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#4285F4"/>
+      <stop offset="1" stop-color="#34A853"/>
     </linearGradient>
-    <filter id="shadow-a" x="130" y="70" width="940" height="610" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-      <feDropShadow dx="0" dy="32" stdDeviation="28" flood-color="#21416F" flood-opacity="0.2"/>
+    <filter id="laptopShadow" x="118" y="72" width="966" height="620" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="34" stdDeviation="30" flood-color="#17365E" flood-opacity="0.22"/>
     </filter>
-    <filter id="soft-a" x="0" y="0" width="1200" height="760" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-      <feGaussianBlur stdDeviation="18"/>
+    <filter id="chipShadow" x="0" y="0" width="1200" height="760" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="12" stdDeviation="14" flood-color="#20406D" flood-opacity="0.12"/>
     </filter>
+    <style>
+      .ui-label { font: 700 15px IBM Plex Sans, Arial, sans-serif; fill: #E8F1FF; }
+      .ui-muted { font: 500 12px IBM Plex Sans, Arial, sans-serif; fill: #9EB9DE; }
+      .tile-title { font: 700 14px IBM Plex Sans, Arial, sans-serif; fill: #17345D; }
+      .tile-detail { font: 500 10px IBM Plex Sans, Arial, sans-serif; fill: #5C7599; }
+      .tile-pill { font: 700 8px IBM Plex Sans, Arial, sans-serif; fill: #24723E; letter-spacing: .2px; }
+      .badge-title { font: 800 16px IBM Plex Sans, Arial, sans-serif; fill: #17345D; }
+      .badge-detail { font: 600 12px IBM Plex Sans, Arial, sans-serif; fill: #5C7599; }
+      .terminal { font: 600 11px IBM Plex Mono, ui-monospace, monospace; fill: #CFE0F8; }
+      .terminal-good { font: 700 11px IBM Plex Mono, ui-monospace, monospace; fill: #89E3A8; }
+    </style>
   </defs>
 
-  <rect width="1200" height="760" rx="36" fill="url(#bg-a)"/>
-  <circle cx="205" cy="126" r="92" fill="#DCEBFF" filter="url(#soft-a)" opacity="0.55"/>
-  <circle cx="1030" cy="168" r="110" fill="#D6E7FF" filter="url(#soft-a)" opacity="0.42"/>
-  <ellipse cx="600" cy="660" rx="320" ry="34" fill="#D1E0F6"/>
+  <rect width="1200" height="760" rx="36" fill="url(#heroBg)"/>
+  <g opacity="0.42" stroke="#BFD2EC" stroke-width="1">
+    <path d="M96 140H1104"/>
+    <path d="M96 246H1104"/>
+    <path d="M96 352H1104"/>
+    <path d="M96 458H1104"/>
+    <path d="M96 564H1104"/>
+    <path d="M194 76V612"/>
+    <path d="M396 76V612"/>
+    <path d="M598 76V612"/>
+    <path d="M800 76V612"/>
+    <path d="M1002 76V612"/>
+  </g>
+  <path d="M172 608H1028L988 648H212L172 608Z" fill="#C9D9EF"/>
+  <ellipse cx="600" cy="676" rx="350" ry="36" fill="#CADAF0" opacity="0.72"/>
 
-  <g filter="url(#shadow-a)">
-    <rect x="188" y="96" width="824" height="492" rx="30" fill="#D8E4F7"/>
-    <rect x="210" y="116" width="780" height="448" rx="26" fill="#122746"/>
-    <rect x="238" y="142" width="724" height="394" rx="22" fill="url(#screen-a)"/>
-    <rect x="238" y="142" width="724" height="54" rx="22" fill="#183863"/>
-    <circle cx="276" cy="169" r="6" fill="#F18C7A"/>
-    <circle cx="298" cy="169" r="6" fill="#F5C96A"/>
-    <circle cx="320" cy="169" r="6" fill="#7FD6A5"/>
-    <text x="352" y="176" fill="#D9E7FF" font-size="18" font-family="IBM Plex Sans, Arial, sans-serif" font-weight="600">LocalCloud runtime</text>
-    <rect x="748" y="152" width="184" height="32" rx="16" fill="#2C5A94"/>
-    <circle cx="774" cy="168" r="6" fill="#7FD6A5"/>
-    <text x="790" y="174" fill="#E8F1FF" font-size="15" font-family="IBM Plex Sans, Arial, sans-serif" font-weight="600">major services online</text>
+  <g filter="url(#laptopShadow)">
+    <rect x="178" y="88" width="844" height="512" rx="30" fill="#D8E5F7"/>
+    <rect x="200" y="110" width="800" height="468" rx="26" fill="#122849"/>
+    <rect x="224" y="134" width="752" height="420" rx="22" fill="url(#screen)"/>
 
-    <rect x="264" y="214" width="214" height="128" rx="24" fill="url(#card-a)"/>
-    <rect x="288" y="238" width="54" height="54" rx="16" fill="#E0EDFF"/>
-    <image href="../icons/gcs.svg" x="296" y="246" width="38" height="38" preserveAspectRatio="xMidYMid meet"/>
-    <text x="358" y="261" fill="#17345D" font-size="23" font-family="IBM Plex Sans, Arial, sans-serif" font-weight="700">Cloud Storage</text>
-    <text x="358" y="286" fill="#4A678E" font-size="15" font-family="IBM Plex Sans, Arial, sans-serif">buckets and object IO</text>
-    <rect x="358" y="302" width="104" height="30" rx="15" fill="#E4F7EA"/>
-    <circle cx="380" cy="317" r="5" fill="#34A853"/>
-    <text x="393" y="322" fill="#2B6F42" font-size="15" font-family="IBM Plex Sans, Arial, sans-serif" font-weight="700">ready</text>
+    <rect x="224" y="134" width="752" height="58" rx="22" fill="#183A67"/>
+    <circle cx="260" cy="164" r="6" fill="#F2998A"/>
+    <circle cx="282" cy="164" r="6" fill="#F7CD6F"/>
+    <circle cx="304" cy="164" r="6" fill="#81D7A6"/>
+    <text x="336" y="170" class="ui-label">LocalCloud runtime</text>
+    <rect x="716" y="148" width="222" height="32" rx="16" fill="#254E83"/>
+    <circle cx="742" cy="164" r="6" fill="#34A853"/>
+    <text x="760" y="170" class="ui-label">major services online</text>
 
-    <rect x="492" y="214" width="214" height="128" rx="24" fill="url(#card-a)"/>
-    <rect x="516" y="238" width="54" height="54" rx="16" fill="#E0EDFF"/>
-    <image href="../icons/pubsub.svg" x="524" y="246" width="38" height="38" preserveAspectRatio="xMidYMid meet"/>
-    <text x="586" y="261" fill="#17345D" font-size="23" font-family="IBM Plex Sans, Arial, sans-serif" font-weight="700">Pub/Sub</text>
-    <text x="586" y="286" fill="#4A678E" font-size="15" font-family="IBM Plex Sans, Arial, sans-serif">topics and event fan-out</text>
-    <rect x="586" y="302" width="104" height="30" rx="15" fill="#E4F7EA"/>
-    <circle cx="608" cy="317" r="5" fill="#34A853"/>
-    <text x="621" y="322" fill="#2B6F42" font-size="15" font-family="IBM Plex Sans, Arial, sans-serif" font-weight="700">ready</text>
+    <rect x="246" y="214" width="40" height="316" rx="20" fill="#183A67" stroke="#2D5688"/>
+    <image href="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20width%3D%2224%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23aecbfa%3B%7D.cls-2%7Bfill%3A%23669df6%3B%7D.cls-3%7Bfill%3A%234285f4%3B%7D.cls-4%7Bfill%3A%23fff%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Ctitle%3EIcon_24px_CloudStorage_Color%3C%2Ftitle%3E%3Cg%20data-name%3D%22Product%20Icons%22%3E%3Crect%20class%3D%22cls-1%22%20height%3D%227%22%20width%3D%2220%22%20x%3D%222%22%20y%3D%224%22%2F%3E%3Crect%20class%3D%22cls-2%22%20height%3D%227%22%20width%3D%222%22%20x%3D%2220%22%20y%3D%224%22%2F%3E%3Cpolygon%20class%3D%22cls-3%22%20points%3D%2222%204%2020%204%2020%2011%2022%204%22%2F%3E%3Crect%20class%3D%22cls-2%22%20height%3D%227%22%20width%3D%222%22%20x%3D%222%22%20y%3D%224%22%2F%3E%3Crect%20class%3D%22cls-4%22%20height%3D%221%22%20width%3D%226%22%20x%3D%226%22%20y%3D%227%22%2F%3E%3Crect%20class%3D%22cls-4%22%20height%3D%223%22%20rx%3D%221.5%22%20width%3D%223%22%20x%3D%2215%22%20y%3D%226%22%2F%3E%3Crect%20class%3D%22cls-1%22%20height%3D%227%22%20width%3D%2220%22%20x%3D%222%22%20y%3D%2213%22%2F%3E%3Crect%20class%3D%22cls-2%22%20height%3D%227%22%20width%3D%222%22%20x%3D%2220%22%20y%3D%2213%22%2F%3E%3Cpolygon%20class%3D%22cls-3%22%20points%3D%2222%2013%2020%2013%2020%2020%2022%2013%22%2F%3E%3Crect%20class%3D%22cls-2%22%20height%3D%227%22%20width%3D%222%22%20x%3D%222%22%20y%3D%2213%22%2F%3E%3Crect%20class%3D%22cls-4%22%20height%3D%221%22%20width%3D%226%22%20x%3D%226%22%20y%3D%2216%22%2F%3E%3Crect%20class%3D%22cls-4%22%20height%3D%223%22%20rx%3D%221.5%22%20width%3D%223%22%20x%3D%2215%22%20y%3D%2215%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E" x="254" y="232" width="24" height="24"/>
+    <image href="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20width%3D%2224%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfilter%3Aurl(%23luminosity-noclip)%3B%7D.cls-2%7Bfill%3A%23669df6%3B%7D.cls-3%7Bmask%3Aurl(%23mask)%3B%7D.cls-4%7Bfill%3A%234285f4%3B%7D.cls-5%7Bfill%3A%23aecbfa%3B%7D%3C%2Fstyle%3E%3Cfilter%20color-interpolation-filters%3D%22sRGB%22%20filterUnits%3D%22userSpaceOnUse%22%20height%3D%2212.76%22%20id%3D%22luminosity-noclip%22%20width%3D%2214.73%22%20x%3D%224.64%22%20y%3D%224.19%22%3E%3CfeFlood%20flood-color%3D%22%23fff%22%20result%3D%22bg%22%2F%3E%3CfeBlend%20in%3D%22SourceGraphic%22%20in2%3D%22bg%22%2F%3E%3C%2Ffilter%3E%3Cmask%20height%3D%2212.76%22%20id%3D%22mask%22%20maskUnits%3D%22userSpaceOnUse%22%20width%3D%2214.73%22%20x%3D%224.64%22%20y%3D%224.19%22%3E%3Ccircle%20class%3D%22cls-1%22%20cx%3D%2212%22%20cy%3D%2212.23%22%20r%3D%223.58%22%2F%3E%3C%2Fmask%3E%3C%2Fdefs%3E%3Ctitle%3EIcon_24px_Pub-Sub_Color%3C%2Ftitle%3E%3Cg%20data-name%3D%22Product%20Icons%22%3E%3Ccircle%20class%3D%22cls-2%22%20cx%3D%2218.97%22%20cy%3D%228.21%22%20r%3D%221.72%22%2F%3E%3Ccircle%20class%3D%22cls-2%22%20cx%3D%225.03%22%20cy%3D%228.21%22%20r%3D%221.72%22%2F%3E%3Ccircle%20class%3D%22cls-2%22%20cx%3D%2212%22%20cy%3D%2220.28%22%20r%3D%221.72%22%2F%3E%3Cg%20class%3D%22cls-3%22%3E%3Crect%20class%3D%22cls-4%22%20height%3D%228.04%22%20transform%3D%22matrix(0.5%2C%20-0.87%2C%200.87%2C%200.5%2C%20-4.59%2C%2020.53)%22%20width%3D%221.59%22%20x%3D%2214.69%22%20y%3D%2210.22%22%2F%3E%3Crect%20class%3D%22cls-4%22%20height%3D%221.59%22%20transform%3D%22translate(-5.98%206.17)%20rotate(-30)%22%20width%3D%228.04%22%20x%3D%224.49%22%20y%3D%2213.45%22%2F%3E%3Crect%20class%3D%22cls-4%22%20height%3D%228.04%22%20width%3D%221.59%22%20x%3D%2211.2%22%20y%3D%224.19%22%2F%3E%3C%2Fg%3E%3Ccircle%20class%3D%22cls-5%22%20cx%3D%2212%22%20cy%3D%2212.23%22%20r%3D%222.78%22%2F%3E%3Ccircle%20class%3D%22cls-5%22%20cx%3D%225.03%22%20cy%3D%2216.25%22%20r%3D%222.19%22%2F%3E%3Ccircle%20class%3D%22cls-5%22%20cx%3D%2218.97%22%20cy%3D%2216.25%22%20r%3D%222.19%22%2F%3E%3Ccircle%20class%3D%22cls-5%22%20cx%3D%2212%22%20cy%3D%224.19%22%20r%3D%222.19%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E" x="254" y="282" width="24" height="24"/>
+    <image href="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20width%3D%2224%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23aecbfa%3B%7D.cls-1%2C.cls-2%2C.cls-3%7Bfill-rule%3Aevenodd%3B%7D.cls-2%7Bfill%3A%23669df6%3B%7D.cls-3%7Bfill%3A%234285f4%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Ctitle%3EIcon_24px_BigQuery_Color%3C%2Ftitle%3E%3Cg%20data-name%3D%22Product%20Icons%22%3E%3Cg%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M6.73%2C10.83v2.63A4.91%2C4.91%2C0%2C0%2C0%2C8.44%2C15.2V10.83Z%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M9.89%2C8.41v7.53A7.62%2C7.62%2C0%2C0%2C0%2C11%2C16%2C8%2C8%2C0%2C0%2C0%2C12%2C16V8.41Z%22%2F%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M13.64%2C11.86v3.29a5%2C5%2C0%2C0%2C0%2C1.7-1.82V11.86Z%22%2F%3E%3Cpath%20class%3D%22cls-3%22%20d%3D%22M17.74%2C16.32l-1.42%2C1.42a.42.42%2C0%2C0%2C0%2C0%2C.6l3.54%2C3.54a.42.42%2C0%2C0%2C0%2C.59%2C0l1.43-1.43a.42.42%2C0%2C0%2C0%2C0-.59l-3.54-3.54a.42.42%2C0%2C0%2C0-.6%2C0%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M11%2C2a9%2C9%2C0%2C1%2C0%2C9%2C9%2C9%2C9%2C0%2C0%2C0-9-9m0%2C15.69A6.68%2C6.68%2C0%2C1%2C1%2C17.69%2C11%2C6.68%2C6.68%2C0%2C0%2C1%2C11%2C17.69%22%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" x="254" y="332" width="24" height="24"/>
+    <image href="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20width%3D%2224%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23669df6%3B%7D.cls-2%7Bfill%3A%234285f4%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Ctitle%3EIcon_24px_Monitoring_Color%3C%2Ftitle%3E%3Cg%20data-name%3D%22Product%20Icons%22%3E%3Crect%20class%3D%22cls-1%22%20height%3D%222.64%22%20width%3D%222.33%22%20x%3D%2210.83%22%20y%3D%2215.84%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M18.48%2C13.87a.56.56%2C0%2C0%2C1-.4-.17L14%2C9.47l-2.74%2C2.89a.57.57%2C0%2C0%2C1-.76.05L8.42%2C10.73l-2.2%2C2.92a.56.56%2C0%2C0%2C1-.45.22H2v1.71a.75.75%2C0%2C0%2C0%2C.74.75H21.26a.75.75%2C0%2C0%2C0%2C.74-.75V13.87Z%22%2F%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M5.5%2C12.76%2C7.88%2C9.6a.55.55%2C0%2C0%2C1%2C.37-.22.63.63%2C0%2C0%2C1%2C.42.12l2.12%2C1.72%2C2.8-2.94a.54.54%2C0%2C0%2C1%2C.4-.17h0a.54.54%2C0%2C0%2C1%2C.4.17l4.33%2C4.48H22V6a.74.74%2C0%2C0%2C0-.74-.74H2.74A.74.74%2C0%2C0%2C0%2C2%2C6v6.81Z%22%2F%3E%3Crect%20class%3D%22cls-2%22%20height%3D%22.61%22%20rx%3D%22.3%22%20width%3D%226.67%22%20x%3D%228.67%22%20y%3D%2218.18%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E" x="254" y="382" width="24" height="24"/>
+    <image href="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22%234285F4%22%3E%0A%20%20%3Cpath%20d%3D%22M9%205H7a2%202%200%200%200-2%202v12a2%202%200%200%200%202%202h10a2%202%200%200%200%202-2V7a2%202%200%200%200-2-2h-2%22%2F%3E%0A%20%20%3Cpath%20d%3D%22M9%205a2%202%200%200%201%202-2h2a2%202%200%200%201%202%202%22%2F%3E%0A%20%20%3Cpath%20d%3D%22M9%2014l2%202%204-4%22%20fill%3D%22none%22%20stroke%3D%22%234285F4%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%3C%2Fsvg%3E" x="254" y="432" width="24" height="24"/>
+    <rect x="252" y="486" width="28" height="4" rx="2" fill="#78A7F7"/>
 
-    <rect x="720" y="214" width="214" height="128" rx="24" fill="url(#card-a)"/>
-    <rect x="744" y="238" width="54" height="54" rx="16" fill="#E0EDFF"/>
-    <image href="../icons/firestore.svg" x="752" y="246" width="38" height="38" preserveAspectRatio="xMidYMid meet"/>
-    <text x="814" y="261" fill="#17345D" font-size="23" font-family="IBM Plex Sans, Arial, sans-serif" font-weight="700">Firestore</text>
-    <text x="814" y="286" fill="#4A678E" font-size="15" font-family="IBM Plex Sans, Arial, sans-serif">documents and live queries</text>
-    <rect x="814" y="302" width="104" height="30" rx="15" fill="#E4F7EA"/>
-    <circle cx="836" cy="317" r="5" fill="#34A853"/>
-    <text x="849" y="322" fill="#2B6F42" font-size="15" font-family="IBM Plex Sans, Arial, sans-serif" font-weight="700">ready</text>
+    <rect x="304" y="204" width="586" height="12" rx="6" fill="#244C7F"/>
+    <rect x="304" y="204" width="412" height="12" rx="6" fill="url(#blueRail)"/>
+    
+    <g class="service-tile" transform="translate(304 222)">
+      <rect width="136" height="80" rx="14" fill="#F7FAFF" stroke="#C8D9F2"/>
+      <rect x="12" y="12" width="36" height="36" rx="10" fill="#EAF2FF" stroke="#D4E4FA"/>
+      <image href="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20width%3D%2224%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23aecbfa%3B%7D.cls-2%7Bfill%3A%23669df6%3B%7D.cls-3%7Bfill%3A%234285f4%3B%7D.cls-4%7Bfill%3A%23fff%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Ctitle%3EIcon_24px_CloudStorage_Color%3C%2Ftitle%3E%3Cg%20data-name%3D%22Product%20Icons%22%3E%3Crect%20class%3D%22cls-1%22%20height%3D%227%22%20width%3D%2220%22%20x%3D%222%22%20y%3D%224%22%2F%3E%3Crect%20class%3D%22cls-2%22%20height%3D%227%22%20width%3D%222%22%20x%3D%2220%22%20y%3D%224%22%2F%3E%3Cpolygon%20class%3D%22cls-3%22%20points%3D%2222%204%2020%204%2020%2011%2022%204%22%2F%3E%3Crect%20class%3D%22cls-2%22%20height%3D%227%22%20width%3D%222%22%20x%3D%222%22%20y%3D%224%22%2F%3E%3Crect%20class%3D%22cls-4%22%20height%3D%221%22%20width%3D%226%22%20x%3D%226%22%20y%3D%227%22%2F%3E%3Crect%20class%3D%22cls-4%22%20height%3D%223%22%20rx%3D%221.5%22%20width%3D%223%22%20x%3D%2215%22%20y%3D%226%22%2F%3E%3Crect%20class%3D%22cls-1%22%20height%3D%227%22%20width%3D%2220%22%20x%3D%222%22%20y%3D%2213%22%2F%3E%3Crect%20class%3D%22cls-2%22%20height%3D%227%22%20width%3D%222%22%20x%3D%2220%22%20y%3D%2213%22%2F%3E%3Cpolygon%20class%3D%22cls-3%22%20points%3D%2222%2013%2020%2013%2020%2020%2022%2013%22%2F%3E%3Crect%20class%3D%22cls-2%22%20height%3D%227%22%20width%3D%222%22%20x%3D%222%22%20y%3D%2213%22%2F%3E%3Crect%20class%3D%22cls-4%22%20height%3D%221%22%20width%3D%226%22%20x%3D%226%22%20y%3D%2216%22%2F%3E%3Crect%20class%3D%22cls-4%22%20height%3D%223%22%20rx%3D%221.5%22%20width%3D%223%22%20x%3D%2215%22%20y%3D%2215%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E" x="18" y="18" width="24" height="24" preserveAspectRatio="xMidYMid meet"/>
+      <text x="58" y="27" class="tile-title">Storage</text>
+      <text x="58" y="45" class="tile-detail">buckets / objects</text>
+      <rect x="58" y="56" width="64" height="16" rx="8" fill="#E6F4EA"/>
+      <circle cx="70" cy="64" r="3.4" fill="#34A853"/>
+      <text x="79" y="68" class="tile-pill">REST</text>
+    </g>
+    <g class="service-tile" transform="translate(454 222)">
+      <rect width="136" height="80" rx="14" fill="#F7FAFF" stroke="#C8D9F2"/>
+      <rect x="12" y="12" width="36" height="36" rx="10" fill="#EAF2FF" stroke="#D4E4FA"/>
+      <image href="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20width%3D%2224%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfilter%3Aurl(%23luminosity-noclip)%3B%7D.cls-2%7Bfill%3A%23669df6%3B%7D.cls-3%7Bmask%3Aurl(%23mask)%3B%7D.cls-4%7Bfill%3A%234285f4%3B%7D.cls-5%7Bfill%3A%23aecbfa%3B%7D%3C%2Fstyle%3E%3Cfilter%20color-interpolation-filters%3D%22sRGB%22%20filterUnits%3D%22userSpaceOnUse%22%20height%3D%2212.76%22%20id%3D%22luminosity-noclip%22%20width%3D%2214.73%22%20x%3D%224.64%22%20y%3D%224.19%22%3E%3CfeFlood%20flood-color%3D%22%23fff%22%20result%3D%22bg%22%2F%3E%3CfeBlend%20in%3D%22SourceGraphic%22%20in2%3D%22bg%22%2F%3E%3C%2Ffilter%3E%3Cmask%20height%3D%2212.76%22%20id%3D%22mask%22%20maskUnits%3D%22userSpaceOnUse%22%20width%3D%2214.73%22%20x%3D%224.64%22%20y%3D%224.19%22%3E%3Ccircle%20class%3D%22cls-1%22%20cx%3D%2212%22%20cy%3D%2212.23%22%20r%3D%223.58%22%2F%3E%3C%2Fmask%3E%3C%2Fdefs%3E%3Ctitle%3EIcon_24px_Pub-Sub_Color%3C%2Ftitle%3E%3Cg%20data-name%3D%22Product%20Icons%22%3E%3Ccircle%20class%3D%22cls-2%22%20cx%3D%2218.97%22%20cy%3D%228.21%22%20r%3D%221.72%22%2F%3E%3Ccircle%20class%3D%22cls-2%22%20cx%3D%225.03%22%20cy%3D%228.21%22%20r%3D%221.72%22%2F%3E%3Ccircle%20class%3D%22cls-2%22%20cx%3D%2212%22%20cy%3D%2220.28%22%20r%3D%221.72%22%2F%3E%3Cg%20class%3D%22cls-3%22%3E%3Crect%20class%3D%22cls-4%22%20height%3D%228.04%22%20transform%3D%22matrix(0.5%2C%20-0.87%2C%200.87%2C%200.5%2C%20-4.59%2C%2020.53)%22%20width%3D%221.59%22%20x%3D%2214.69%22%20y%3D%2210.22%22%2F%3E%3Crect%20class%3D%22cls-4%22%20height%3D%221.59%22%20transform%3D%22translate(-5.98%206.17)%20rotate(-30)%22%20width%3D%228.04%22%20x%3D%224.49%22%20y%3D%2213.45%22%2F%3E%3Crect%20class%3D%22cls-4%22%20height%3D%228.04%22%20width%3D%221.59%22%20x%3D%2211.2%22%20y%3D%224.19%22%2F%3E%3C%2Fg%3E%3Ccircle%20class%3D%22cls-5%22%20cx%3D%2212%22%20cy%3D%2212.23%22%20r%3D%222.78%22%2F%3E%3Ccircle%20class%3D%22cls-5%22%20cx%3D%225.03%22%20cy%3D%2216.25%22%20r%3D%222.19%22%2F%3E%3Ccircle%20class%3D%22cls-5%22%20cx%3D%2218.97%22%20cy%3D%2216.25%22%20r%3D%222.19%22%2F%3E%3Ccircle%20class%3D%22cls-5%22%20cx%3D%2212%22%20cy%3D%224.19%22%20r%3D%222.19%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E" x="18" y="18" width="24" height="24" preserveAspectRatio="xMidYMid meet"/>
+      <text x="58" y="27" class="tile-title">Pub/Sub</text>
+      <text x="58" y="45" class="tile-detail">topics / pulls</text>
+      <rect x="58" y="56" width="64" height="16" rx="8" fill="#E6F4EA"/>
+      <circle cx="70" cy="64" r="3.4" fill="#34A853"/>
+      <text x="79" y="68" class="tile-pill">gRPC</text>
+    </g>
+    <g class="service-tile" transform="translate(604 222)">
+      <rect width="136" height="80" rx="14" fill="#F7FAFF" stroke="#C8D9F2"/>
+      <rect x="12" y="12" width="36" height="36" rx="10" fill="#EAF2FF" stroke="#D4E4FA"/>
+      <image href="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20width%3D%2224%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23669df6%3B%7D.cls-2%7Bfill%3A%23aecbfa%3B%7D.cls-3%7Bfill%3A%234285f4%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Ctitle%3EIcon_24px_Firestore_Color%3C%2Ftitle%3E%3Cg%20data-name%3D%22Product%20Icons%22%3E%3Cg%20data-name%3D%22colored-32%2Ffirestore%22%3E%3Cg%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M21%2C13%2C12%2C9v4l9%2C4Zm0-7L12%2C2V6l9%2C4Z%22%2F%3E%3Cpolygon%20class%3D%22cls-2%22%20id%3D%22Rectangle-7%22%20points%3D%223%206%2012%202%2012%206%203%2010%203%206%22%2F%3E%3Cpolygon%20class%3D%22cls-2%22%20data-name%3D%22Rectangle-7%22%20id%3D%22Rectangle-7-2%22%20points%3D%223%2013%2012%209%2012%2013%203%2017%203%2013%22%2F%3E%3Cpolygon%20class%3D%22cls-3%22%20data-name%3D%22Rectangle-7%22%20id%3D%22Rectangle-7-3%22%20points%3D%2212%2018%2015.37%2016.5%2019.88%2018.5%2012%2022%2012%2018%22%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" x="18" y="18" width="24" height="24" preserveAspectRatio="xMidYMid meet"/>
+      <text x="58" y="27" class="tile-title">Firestore</text>
+      <text x="58" y="45" class="tile-detail">docs / queries</text>
+      <rect x="58" y="56" width="64" height="16" rx="8" fill="#E6F4EA"/>
+      <circle cx="70" cy="64" r="3.4" fill="#34A853"/>
+      <text x="79" y="68" class="tile-pill">gRPC</text>
+    </g>
+    <g class="service-tile" transform="translate(754 222)">
+      <rect width="136" height="80" rx="14" fill="#F7FAFF" stroke="#C8D9F2"/>
+      <rect x="12" y="12" width="36" height="36" rx="10" fill="#EAF2FF" stroke="#D4E4FA"/>
+      <image href="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20width%3D%2224%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23aecbfa%3B%7D.cls-1%2C.cls-2%2C.cls-3%7Bfill-rule%3Aevenodd%3B%7D.cls-2%7Bfill%3A%23669df6%3B%7D.cls-3%7Bfill%3A%234285f4%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Ctitle%3EIcon_24px_BigQuery_Color%3C%2Ftitle%3E%3Cg%20data-name%3D%22Product%20Icons%22%3E%3Cg%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M6.73%2C10.83v2.63A4.91%2C4.91%2C0%2C0%2C0%2C8.44%2C15.2V10.83Z%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M9.89%2C8.41v7.53A7.62%2C7.62%2C0%2C0%2C0%2C11%2C16%2C8%2C8%2C0%2C0%2C0%2C12%2C16V8.41Z%22%2F%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M13.64%2C11.86v3.29a5%2C5%2C0%2C0%2C0%2C1.7-1.82V11.86Z%22%2F%3E%3Cpath%20class%3D%22cls-3%22%20d%3D%22M17.74%2C16.32l-1.42%2C1.42a.42.42%2C0%2C0%2C0%2C0%2C.6l3.54%2C3.54a.42.42%2C0%2C0%2C0%2C.59%2C0l1.43-1.43a.42.42%2C0%2C0%2C0%2C0-.59l-3.54-3.54a.42.42%2C0%2C0%2C0-.6%2C0%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M11%2C2a9%2C9%2C0%2C1%2C0%2C9%2C9%2C9%2C9%2C0%2C0%2C0-9-9m0%2C15.69A6.68%2C6.68%2C0%2C1%2C1%2C17.69%2C11%2C6.68%2C6.68%2C0%2C0%2C1%2C11%2C17.69%22%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" x="18" y="18" width="24" height="24" preserveAspectRatio="xMidYMid meet"/>
+      <text x="58" y="27" class="tile-title">BigQuery</text>
+      <text x="58" y="45" class="tile-detail">SQL on DuckDB</text>
+      <rect x="58" y="56" width="64" height="16" rx="8" fill="#E6F4EA"/>
+      <circle cx="70" cy="64" r="3.4" fill="#34A853"/>
+      <text x="79" y="68" class="tile-pill">SQL</text>
+    </g>
+    <g class="service-tile" transform="translate(304 316)">
+      <rect width="136" height="80" rx="14" fill="#F7FAFF" stroke="#C8D9F2"/>
+      <rect x="12" y="12" width="36" height="36" rx="10" fill="#EAF2FF" stroke="#D4E4FA"/>
+      <image href="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20width%3D%2224%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23669df6%3B%7D.cls-1%2C.cls-2%2C.cls-3%7Bfill-rule%3Aevenodd%3B%7D.cls-2%7Bfill%3A%234285f4%3B%7D.cls-3%7Bfill%3A%23aecbfa%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Ctitle%3EIcon_24px_CloudSpanner_Color%3C%2Ftitle%3E%3Cg%20data-name%3D%22Product%20Icons%22%3E%3Cg%3E%3Cpolygon%20class%3D%22cls-1%22%20data-name%3D%22Shape%22%20id%3D%22Shape-2%22%20points%3D%2213.34%2012.76%2013.34%208.4%2010.66%208.4%2010.66%2012.76%206.89%2014.94%208.23%2017.26%2012%2015.08%2015.77%2017.26%2017.11%2014.94%2013.34%2012.76%22%2F%3E%3Cpolygon%20class%3D%22cls-2%22%20points%3D%2213.34%2012.76%2013.34%208.4%2012%208.4%2012%2013.52%207.56%2016.1%208.23%2017.26%2012%2015.08%2015.77%2017.26%2017.11%2014.94%2013.34%2012.76%22%2F%3E%3Cpolygon%20class%3D%22cls-3%22%20points%3D%2210.65%202.77%208.62%203.99%208.62%207.72%2012%209.55%2012%206.44%2010.65%205.82%2010.65%202.77%22%2F%3E%3Cpolygon%20class%3D%22cls-1%22%20points%3D%2213.35%205.82%2012%206.44%2012%209.55%2015.38%207.72%2015.38%203.99%2013.35%202.77%2013.35%205.82%22%2F%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M18.14%2C17.08l-.08%2C1.39L20.76%2C20l-2.18%2C1.2-3.24-1.87.11-3.83%2C3.27-2L22%2C15.38%2C22%2C17.87l-2.69-1.55Z%22%2F%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M5.86%2C17.08l-1.17-.76L2%2C17.87l0-2.49%2C3.23-1.87%2C3.27%2C2%2C.11%2C3.83L5.42%2C21.23%2C3.24%2C20l2.7-1.56Z%22%2F%3E%3Cpolygon%20class%3D%22cls-3%22%20points%3D%2222%2017.87%2021.95%2015.38%2018.72%2013.52%2015.45%2015.53%2018.14%2017.08%2019.3%2016.32%2022%2017.87%22%2F%3E%3Cpolygon%20class%3D%22cls-3%22%20points%3D%222%2017.87%204.7%2016.32%205.86%2017.08%208.55%2015.53%205.28%2013.52%202.05%2015.38%202%2017.87%22%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" x="18" y="18" width="24" height="24" preserveAspectRatio="xMidYMid meet"/>
+      <text x="58" y="27" class="tile-title">Spanner</text>
+      <text x="58" y="45" class="tile-detail">schemas / reads</text>
+      <rect x="58" y="56" width="64" height="16" rx="8" fill="#E6F4EA"/>
+      <circle cx="70" cy="64" r="3.4" fill="#34A853"/>
+      <text x="79" y="68" class="tile-pill">gRPC</text>
+    </g>
+    <g class="service-tile" transform="translate(454 316)">
+      <rect width="136" height="80" rx="14" fill="#F7FAFF" stroke="#C8D9F2"/>
+      <rect x="12" y="12" width="36" height="36" rx="10" fill="#EAF2FF" stroke="#D4E4FA"/>
+      <image href="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20width%3D%2224%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23669df6%3B%7D.cls-1%2C.cls-2%2C.cls-3%7Bfill-rule%3Aevenodd%3B%7D.cls-2%7Bfill%3A%23aecbfa%3B%7D.cls-3%7Bfill%3A%234285f4%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Ctitle%3EIcon_24px_BigTable_Color%3C%2Ftitle%3E%3Cg%20data-name%3D%22Product%20Icons%22%3E%3Cg%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M16.22%2C6.45%2C12%2C3.94a2.86%2C2.86%2C0%2C0%2C1-1.25-1.71s.16-.32.38-.2%2C3.5%2C2.06%2C5.25%2C3.1c.63.37.24%2C2%2C.24%2C2A.77.77%2C0%2C0%2C0%2C16.22%2C6.45Z%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M17.49%2C12.69a.35.35%2C0%2C0%2C1-.16.33l-1%2C.68V5.75c0-.27.17-.56-.06-.7l.92.68a.73.73%2C0%2C0%2C1%2C.35.65Z%22%2F%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M12%2C13.6a.36.36%2C0%2C0%2C1-.2-.06L8.34%2C11.48v.9L12%2C14.56l.29-.57s-.22-.39-.29-.39Z%22%2F%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M12.2%2C15.4a.36.36%2C0%2C0%2C1-.4%2C0L8.34%2C13.34V14a.42.42%2C0%2C0%2C0%2C.19.35l3.28%2C2a.37.37%2C0%2C0%2C0%2C.38%2C0%2C2%2C2%2C0%2C0%2C0%2C.2-.52l-.19-.39Z%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M12%2C12.73l3.66-2.18v-.43a.39.39%2C0%2C0%2C0-.19-.34l-3.28-2a.37.37%2C0%2C0%2C0-.38%2C0l-3.28%2C2a.41.41%2C0%2C0%2C0-.19.34v.43L12%2C12.73Z%22%2F%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M12%2C11.83%2C8.53%2C9.78a.41.41%2C0%2C0%2C0-.19.34v.43L12%2C12.73l.28-.56L12%2C11.83Z%22%2F%3E%3Cpath%20class%3D%22cls-3%22%20d%3D%22M12%2C13.6v1l3.66-2.18v-.9L12.2%2C13.54a.65.65%2C0%2C0%2C1-.2.06Z%22%2F%3E%3Cpath%20class%3D%22cls-3%22%20d%3D%22M12.2%2C15.4a.36.36%2C0%2C0%2C1-.2.06c0%2C.28%2C0%2C.9%2C0%2C.9a.5.5%2C0%2C0%2C0%2C.21-.05l3.28-2a.39.39%2C0%2C0%2C0%2C.19-.35v-.66L12.2%2C15.4Z%22%2F%3E%3Cpath%20class%3D%22cls-3%22%20d%3D%22M15.47%2C9.78%2C12%2C11.83v.9l3.66-2.18v-.43a.39.39%2C0%2C0%2C0-.19-.34Z%22%2F%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M7.78%2C17.53%2C11.93%2C20a2.72%2C2.72%2C0%2C0%2C1%2C1.28%2C1.8.18.18%2C0%2C0%2C1-.28.18L7.48%2C18.75c-.53-.32-.07-1.88-.07-1.88A.77.77%2C0%2C0%2C0%2C7.78%2C17.53Z%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M6.51%2C17.73V11.17a.41.41%2C0%2C0%2C1%2C.19-.33l1-.59v7.91c0%2C.27%2C0%2C.69.21.83l-1.06-.66A.75.75%2C0%2C0%2C1%2C6.51%2C17.73Z%22%2F%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M10.16%2C5.46a.75.75%2C0%2C0%2C0-.74%2C0L5.22%2C8a2.63%2C2.63%2C0%2C0%2C1-2.08.26.23.23%2C0%2C0%2C1%2C0-.4c.18-.09%2C6.32-3.74%2C6.32-3.74.23-.14.74%2C1.39.74%2C1.39Z%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M10.15%2C4.08l5.32%2C3.15a.37.37%2C0%2C0%2C1%2C.2.31V8.72L9%2C4.76a.75.75%2C0%2C0%2C0-.74%2C0l1.18-.69a.71.71%2C0%2C0%2C1%2C.73%2C0Z%22%2F%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M13.82%2C18.49a.73.73%2C0%2C0%2C0%2C.74%2C0L18.76%2C16a2.63%2C2.63%2C0%2C0%2C1%2C2.1-.25.21.21%2C0%2C0%2C1%2C0%2C.38l-6.33%2C3.75c-.22.14-.74-1.4-.74-1.4Z%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M8.51%2C16.75a.56.56%2C0%2C0%2C1-.17-.33V15.26L15%2C19.19a.69.69%2C0%2C0%2C0%2C.73%2C0l-1.18.7a.7.7%2C0%2C0%2C1-.74%2C0Z%22%2F%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M6.26%2C9.81a.76.76%2C0%2C0%2C0-.37.65v5a2.75%2C2.75%2C0%2C0%2C1-.87%2C2%2C.18.18%2C0%2C0%2C1-.3-.13V9.77c0-.28%2C1.54%2C0%2C1.54%2C0Z%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M9.77%2C6.52a.34.34%2C0%2C0%2C1%2C.36%2C0l1%2C.59L5.05%2C10.67a.77.77%2C0%2C0%2C0-.37.66V9.94a.72.72%2C0%2C0%2C1%2C.38-.64Z%22%2F%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M18.17%2C13.44v-5a2.81%2C2.81%2C0%2C0%2C1%2C.84-2s.33-.11.31.21%2C0%2C7.37%2C0%2C7.37c-.31.37-1.61%2C0-1.61%2C0A.81.81%2C0%2C0%2C0%2C18.17%2C13.44Z%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M19%2C14.61l-4.74%2C2.85a.35.35%2C0%2C0%2C1-.37%2C0l-1-.57L19%2C13.22a.77.77%2C0%2C0%2C0%2C.37-.66V14C19.35%2C14.23%2C19%2C14.61%2C19%2C14.61Z%22%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" x="18" y="18" width="24" height="24" preserveAspectRatio="xMidYMid meet"/>
+      <text x="58" y="27" class="tile-title">Bigtable</text>
+      <text x="58" y="45" class="tile-detail">tables / rows</text>
+      <rect x="58" y="56" width="64" height="16" rx="8" fill="#E6F4EA"/>
+      <circle cx="70" cy="64" r="3.4" fill="#34A853"/>
+      <text x="79" y="68" class="tile-pill">gRPC</text>
+    </g>
+    <g class="service-tile" transform="translate(604 316)">
+      <rect width="136" height="80" rx="14" fill="#F7FAFF" stroke="#C8D9F2"/>
+      <rect x="12" y="12" width="36" height="36" rx="10" fill="#EAF2FF" stroke="#D4E4FA"/>
+      <image href="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20width%3D%2224%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%20stroke%3D%22none%22%20stroke-width%3D%221%22%3E%3Cg%20fill%3D%22%234285F4%22%20fill-rule%3D%22nonzero%22%20transform%3D%22translate(2.000000%2C%206.000000)%22%3E%3Cpath%20d%3D%22M20%2C9.41469125e-14%20L20%2C11.8867925%20L16.0377358%2C11.8867925%20C15.9335312%2C11.8867925%2015.8490566%2C11.8023179%2015.8490566%2C11.6981132%20L15.8490566%2C10.5660377%20C15.8490566%2C10.4618331%2015.9335312%2C10.3773585%2016.0377358%2C10.3773585%20L18.4900566%2C10.377%20L18.4900566%2C1.509%20L16.0377358%2C1.50943396%20C15.9335312%2C1.50943396%2015.8490566%2C1.42495939%2015.8490566%2C1.32075472%20L15.8490566%2C0.188679245%20C15.8490566%2C0.0844745755%2015.9335312%2C9.41105434e-14%2016.0377358%2C9.41469125e-14%20L20%2C9.41469125e-14%20Z%20M4.309101%2C9.41469125e-14%20C4.41330567%2C9.3877869e-14%204.49778024%2C0.0844745755%204.49778024%2C0.188679245%20L4.49778024%2C1.32075472%20C4.49778024%2C1.42495939%204.41330567%2C1.50943396%204.309101%2C1.50943396%20L1.509%2C1.509%20L1.509%2C10.377%20L4.29245283%2C10.3773585%20C4.3966575%2C10.3773585%204.48113208%2C10.4618331%204.48113208%2C10.5660377%20L4.48113208%2C11.6981132%20C4.48113208%2C11.8023179%204.3966575%2C11.8867925%204.29245283%2C11.8867925%20L2.14050999e-13%2C11.8867925%20L2.14050999e-13%2C9.41469125e-14%20L4.309101%2C9.41469125e-14%20Z%20M15.4271098%2C3.86792453%20L15.4271098%2C5.3240566%20L15.4879305%2C5.34852941%20L16.8381494%2C4.87130966%20L17.1179245%2C5.69114872%20L15.7555414%2C6.15613208%20L15.719049%2C6.25402331%20L16.6556874%2C7.51437292%20L15.9501676%2C8.02830189%20L15.0378575%2C6.76795228%20L14.9527085%2C6.76795228%20L14.0403984%2C8.02830189%20L13.3348786%2C7.51437292%20L14.2593529%2C6.25402331%20L14.2350246%2C6.15613208%20L12.8726415%2C5.69114872%20L13.1524166%2C4.87130966%20L14.4904714%2C5.34852941%20L14.5634562%2C5.3240566%20L14.5634562%2C3.86792453%20L15.4271098%2C3.86792453%20Z%20M5.19597773%2C3.86792453%20L5.19597773%2C5.30963945%20L5.2567984%2C5.33386996%20L6.60701735%2C4.86137515%20L6.88679245%2C5.673097%20L5.52440936%2C6.13347656%20L5.48791696%2C6.23039857%20L6.42455533%2C7.47826947%20L5.71903552%2C7.98711003%20L4.80672541%2C6.73923913%20L4.72157647%2C6.73923913%20L3.80926637%2C7.98711003%20L3.10374655%2C7.47826947%20L4.02822079%2C6.23039857%20L4.00389252%2C6.13347656%20L2.64150943%2C5.673097%20L2.92128453%2C4.86137515%20L4.25933935%2C5.33386996%20L4.33232416%2C5.30963945%20L4.33232416%2C3.86792453%20L5.19597773%2C3.86792453%20Z%20M10.2903173%2C3.86792453%20L10.2903173%2C5.30963945%20L10.351138%2C5.33386996%20L11.701357%2C4.86137515%20L11.9811321%2C5.673097%20L10.618749%2C6.13347656%20L10.5822566%2C6.23039857%20L11.518895%2C7.47826947%20L10.8133751%2C7.98711003%20L9.90106504%2C6.73923913%20L9.81591609%2C6.73923913%20L8.90360599%2C7.98711003%20L8.19808618%2C7.47826947%20L9.12256042%2C6.23039857%20L9.09823215%2C6.13347656%20L7.73584906%2C5.673097%20L8.01562416%2C4.86137515%20L9.35367897%2C5.33386996%20L9.42666378%2C5.30963945%20L9.42666378%2C3.86792453%20L10.2903173%2C3.86792453%20Z%22%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" x="18" y="18" width="24" height="24" preserveAspectRatio="xMidYMid meet"/>
+      <text x="58" y="27" class="tile-title">Secrets</text>
+      <text x="58" y="45" class="tile-detail">versions / access</text>
+      <rect x="58" y="56" width="64" height="16" rx="8" fill="#E6F4EA"/>
+      <circle cx="70" cy="64" r="3.4" fill="#34A853"/>
+      <text x="79" y="68" class="tile-pill">gRPC</text>
+    </g>
+    <g class="service-tile" transform="translate(754 316)">
+      <rect width="136" height="80" rx="14" fill="#F7FAFF" stroke="#C8D9F2"/>
+      <rect x="12" y="12" width="36" height="36" rx="10" fill="#EAF2FF" stroke="#D4E4FA"/>
+      <image href="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20width%3D%2224%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3Anone%3B%7D.cls-2%7Bfill%3A%23669df6%3B%7D.cls-3%7Bfill%3A%234285f4%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Ctitle%3EIcon_24px_Tasks_Color%3C%2Ftitle%3E%3Cg%20data-name%3D%22Product%20Icons%22%3E%3Cg%20data-name%3D%22colored-32%2Ftasks%22%3E%3Crect%20class%3D%22cls-1%22%20height%3D%2224%22%20width%3D%2224%22%2F%3E%3Cg%3E%3Crect%20class%3D%22cls-2%22%20height%3D%227%22%20width%3D%222%22%20x%3D%2211%22%20y%3D%225%22%2F%3E%3Crect%20class%3D%22cls-3%22%20data-name%3D%22Rectangle-path%22%20height%3D%227%22%20id%3D%22Rectangle-path-2%22%20width%3D%222%22%20x%3D%2211%22%20y%3D%2212%22%2F%3E%3C%2Fg%3E%3Cg%20data-name%3D%22art1%22%3E%3Crect%20class%3D%22cls-2%22%20data-name%3D%22Rectangle-path%22%20height%3D%227%22%20id%3D%22Rectangle-path-3%22%20width%3D%222%22%20x%3D%2215%22%20y%3D%225%22%2F%3E%3Crect%20class%3D%22cls-3%22%20data-name%3D%22Rectangle-path%22%20height%3D%227%22%20id%3D%22Rectangle-path-4%22%20width%3D%222%22%20x%3D%2215%22%20y%3D%2212%22%2F%3E%3C%2Fg%3E%3Cg%20data-name%3D%22art1%22%3E%3Crect%20class%3D%22cls-2%22%20data-name%3D%22Rectangle-path%22%20height%3D%227%22%20id%3D%22Rectangle-path-5%22%20width%3D%222%22%20x%3D%2219%22%20y%3D%225%22%2F%3E%3Crect%20class%3D%22cls-3%22%20data-name%3D%22Rectangle-path%22%20height%3D%227%22%20id%3D%22Rectangle-path-6%22%20width%3D%222%22%20x%3D%2219%22%20y%3D%2212%22%2F%3E%3C%2Fg%3E%3Cg%20data-name%3D%22art1%22%3E%3Crect%20class%3D%22cls-2%22%20data-name%3D%22Rectangle-path%22%20height%3D%227%22%20id%3D%22Rectangle-path-7%22%20width%3D%222%22%20x%3D%227%22%20y%3D%225%22%2F%3E%3Crect%20class%3D%22cls-3%22%20data-name%3D%22Rectangle-path%22%20height%3D%227%22%20id%3D%22Rectangle-path-8%22%20width%3D%222%22%20x%3D%227%22%20y%3D%2212%22%2F%3E%3C%2Fg%3E%3Cg%20data-name%3D%22art1%22%3E%3Crect%20class%3D%22cls-2%22%20data-name%3D%22Rectangle-path%22%20height%3D%227%22%20id%3D%22Rectangle-path-9%22%20width%3D%222%22%20x%3D%223%22%20y%3D%225%22%2F%3E%3Crect%20class%3D%22cls-3%22%20data-name%3D%22Rectangle-path%22%20height%3D%227%22%20id%3D%22Rectangle-path-10%22%20width%3D%222%22%20x%3D%223%22%20y%3D%2212%22%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" x="18" y="18" width="24" height="24" preserveAspectRatio="xMidYMid meet"/>
+      <text x="58" y="27" class="tile-title">Tasks</text>
+      <text x="58" y="45" class="tile-detail">queues / dispatch</text>
+      <rect x="58" y="56" width="64" height="16" rx="8" fill="#E6F4EA"/>
+      <circle cx="70" cy="64" r="3.4" fill="#34A853"/>
+      <text x="79" y="68" class="tile-pill">REST</text>
+    </g>
+    <g class="service-tile" transform="translate(304 410)">
+      <rect width="136" height="80" rx="14" fill="#F7FAFF" stroke="#C8D9F2"/>
+      <rect x="12" y="12" width="36" height="36" rx="10" fill="#EAF2FF" stroke="#D4E4FA"/>
+      <image href="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20width%3D%2224%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%234285f4%3B%7D.cls-2%7Bfill%3Anone%3B%7D.cls-3%7Bfill%3A%23669df6%3B%7D.cls-4%7Bfill%3A%23aecbfa%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Ctitle%3EIcon_24px_Logging_Color%3C%2Ftitle%3E%3Cg%20data-name%3D%22Product%20Icons%22%3E%3Crect%20class%3D%22cls-1%22%20height%3D%222%22%20width%3D%224%22%20x%3D%226%22%20y%3D%2211%22%2F%3E%3Crect%20class%3D%22cls-1%22%20height%3D%222%22%20width%3D%226%22%20x%3D%224%22%20y%3D%2218%22%2F%3E%3Cg%20data-name%3D%22colored-32%2Flogs%22%3E%3Crect%20class%3D%22cls-2%22%20height%3D%2224%22%20width%3D%2224%22%2F%3E%3Cg%3E%3Cpolygon%20class%3D%22cls-1%22%20id%3D%22Fill-3%22%20points%3D%224%2018%206%2018%206%206%204%206%204%2018%22%2F%3E%3Cpolygon%20class%3D%22cls-3%22%20id%3D%22Fill-4%22%20points%3D%229%207%2022%207%2022%203%209%203%209%207%22%2F%3E%3Cpolygon%20class%3D%22cls-3%22%20data-name%3D%22Fill-4%22%20id%3D%22Fill-4-2%22%20points%3D%229%2014%2022%2014%2022%2010%209%2010%209%2014%22%2F%3E%3Cpolygon%20class%3D%22cls-3%22%20data-name%3D%22Fill-4%22%20id%3D%22Fill-4-3%22%20points%3D%229%2021%2022%2021%2022%2017%209%2017%209%2021%22%2F%3E%3Cpolygon%20class%3D%22cls-4%22%20id%3D%22Fill-7%22%20points%3D%222%208%208%208%208%202%202%202%202%208%22%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" x="18" y="18" width="24" height="24" preserveAspectRatio="xMidYMid meet"/>
+      <text x="58" y="27" class="tile-title">Logging</text>
+      <text x="58" y="45" class="tile-detail">ingest / search</text>
+      <rect x="58" y="56" width="64" height="16" rx="8" fill="#E6F4EA"/>
+      <circle cx="70" cy="64" r="3.4" fill="#34A853"/>
+      <text x="79" y="68" class="tile-pill">gRPC</text>
+    </g>
+    <g class="service-tile" transform="translate(454 410)">
+      <rect width="136" height="80" rx="14" fill="#F7FAFF" stroke="#C8D9F2"/>
+      <rect x="12" y="12" width="36" height="36" rx="10" fill="#EAF2FF" stroke="#D4E4FA"/>
+      <image href="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20width%3D%2224%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23669df6%3B%7D.cls-2%7Bfill%3A%234285f4%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Ctitle%3EIcon_24px_Monitoring_Color%3C%2Ftitle%3E%3Cg%20data-name%3D%22Product%20Icons%22%3E%3Crect%20class%3D%22cls-1%22%20height%3D%222.64%22%20width%3D%222.33%22%20x%3D%2210.83%22%20y%3D%2215.84%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M18.48%2C13.87a.56.56%2C0%2C0%2C1-.4-.17L14%2C9.47l-2.74%2C2.89a.57.57%2C0%2C0%2C1-.76.05L8.42%2C10.73l-2.2%2C2.92a.56.56%2C0%2C0%2C1-.45.22H2v1.71a.75.75%2C0%2C0%2C0%2C.74.75H21.26a.75.75%2C0%2C0%2C0%2C.74-.75V13.87Z%22%2F%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M5.5%2C12.76%2C7.88%2C9.6a.55.55%2C0%2C0%2C1%2C.37-.22.63.63%2C0%2C0%2C1%2C.42.12l2.12%2C1.72%2C2.8-2.94a.54.54%2C0%2C0%2C1%2C.4-.17h0a.54.54%2C0%2C0%2C1%2C.4.17l4.33%2C4.48H22V6a.74.74%2C0%2C0%2C0-.74-.74H2.74A.74.74%2C0%2C0%2C0%2C2%2C6v6.81Z%22%2F%3E%3Crect%20class%3D%22cls-2%22%20height%3D%22.61%22%20rx%3D%22.3%22%20width%3D%226.67%22%20x%3D%228.67%22%20y%3D%2218.18%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E" x="18" y="18" width="24" height="24" preserveAspectRatio="xMidYMid meet"/>
+      <text x="58" y="27" class="tile-title">Monitoring</text>
+      <text x="58" y="45" class="tile-detail">metrics / health</text>
+      <rect x="58" y="56" width="64" height="16" rx="8" fill="#E6F4EA"/>
+      <circle cx="70" cy="64" r="3.4" fill="#34A853"/>
+      <text x="79" y="68" class="tile-pill">gRPC</text>
+    </g>
+    <g class="service-tile" transform="translate(604 410)">
+      <rect width="136" height="80" rx="14" fill="#F7FAFF" stroke="#C8D9F2"/>
+      <rect x="12" y="12" width="36" height="36" rx="10" fill="#EAF2FF" stroke="#D4E4FA"/>
+      <image href="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22%234285F4%22%3E%0A%20%20%3Cpath%20d%3D%22M9%205H7a2%202%200%200%200-2%202v12a2%202%200%200%200%202%202h10a2%202%200%200%200%202-2V7a2%202%200%200%200-2-2h-2%22%2F%3E%0A%20%20%3Cpath%20d%3D%22M9%205a2%202%200%200%201%202-2h2a2%202%200%200%201%202%202%22%2F%3E%0A%20%20%3Cpath%20d%3D%22M9%2014l2%202%204-4%22%20fill%3D%22none%22%20stroke%3D%22%234285F4%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%3C%2Fsvg%3E" x="18" y="18" width="24" height="24" preserveAspectRatio="xMidYMid meet"/>
+      <text x="58" y="27" class="tile-title">Workflows</text>
+      <text x="58" y="45" class="tile-detail">local steps</text>
+      <rect x="58" y="56" width="64" height="16" rx="8" fill="#E6F4EA"/>
+      <circle cx="70" cy="64" r="3.4" fill="#34A853"/>
+      <text x="79" y="68" class="tile-pill">REST</text>
+    </g>
+    <g class="service-tile" transform="translate(754 410)">
+      <rect width="136" height="80" rx="14" fill="#F7FAFF" stroke="#C8D9F2"/>
+      <rect x="12" y="12" width="36" height="36" rx="10" fill="#EAF2FF" stroke="#D4E4FA"/>
+      <image href="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20width%3D%2224%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%2C.cls-4%7Bfill%3A%23669df6%3B%7D.cls-2%7Bfill%3A%234285f4%3B%7D.cls-2%2C.cls-3%2C.cls-4%7Bfill-rule%3Aevenodd%3B%7D.cls-3%7Bfill%3A%23aecbfa%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Ctitle%3EIcon_24px_MemoryStore_Color%3C%2Ftitle%3E%3Cg%20data-name%3D%22Product%20Icons%22%3E%3Cg%3E%3Crect%20class%3D%22cls-1%22%20height%3D%222.58%22%20width%3D%223.33%22%20x%3D%222%22%20y%3D%223.94%22%2F%3E%3Crect%20class%3D%22cls-1%22%20height%3D%222.58%22%20width%3D%223.33%22%20x%3D%222%22%20y%3D%228.45%22%2F%3E%3Crect%20class%3D%22cls-1%22%20height%3D%222.58%22%20width%3D%223.33%22%20x%3D%222%22%20y%3D%2212.97%22%2F%3E%3Crect%20class%3D%22cls-1%22%20height%3D%222.58%22%20width%3D%223.33%22%20x%3D%222%22%20y%3D%2217.48%22%2F%3E%3Crect%20class%3D%22cls-1%22%20height%3D%222.58%22%20width%3D%223.33%22%20x%3D%2218.67%22%20y%3D%223.94%22%2F%3E%3Crect%20class%3D%22cls-1%22%20height%3D%222.58%22%20width%3D%223.33%22%20x%3D%2218.67%22%20y%3D%228.45%22%2F%3E%3Crect%20class%3D%22cls-1%22%20height%3D%222.58%22%20width%3D%223.33%22%20x%3D%2218.67%22%20y%3D%2212.97%22%2F%3E%3Crect%20class%3D%22cls-1%22%20height%3D%222.58%22%20width%3D%223.33%22%20x%3D%2218.67%22%20y%3D%2217.48%22%2F%3E%3Cpolygon%20class%3D%22cls-2%22%20points%3D%2221.33%206.52%2018.67%206.52%2018.67%203.94%2021.33%206.52%22%2F%3E%3Cpolygon%20class%3D%22cls-2%22%20points%3D%2221.33%2011.03%2018.67%2011.03%2018.67%208.45%2021.33%2011.03%22%2F%3E%3Cpolygon%20class%3D%22cls-2%22%20points%3D%2221.33%2015.55%2018.67%2015.55%2018.67%2012.97%2021.33%2015.55%22%2F%3E%3Cpolygon%20class%3D%22cls-2%22%20points%3D%2221.33%2020.07%2018.67%2020.07%2018.67%2017.48%2021.33%2020.07%22%2F%3E%3Cpath%20class%3D%22cls-3%22%20d%3D%22M5.33%2C22H18.67V2H5.33Zm6-9H8l4.67-7.74V11H16l-4.67%2C7.74Z%22%2F%3E%3Cpolygon%20class%3D%22cls-4%22%20points%3D%2211.33%2022%2011.33%2018.77%2016%2011.03%2012.67%2011.03%2012.67%202%2018.67%202%2018.67%2022%2011.33%2022%22%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" x="18" y="18" width="24" height="24" preserveAspectRatio="xMidYMid meet"/>
+      <text x="58" y="27" class="tile-title">Memorystore</text>
+      <text x="58" y="45" class="tile-detail">Redis-compatible</text>
+      <rect x="58" y="56" width="64" height="16" rx="8" fill="#E6F4EA"/>
+      <circle cx="70" cy="64" r="3.4" fill="#34A853"/>
+      <text x="79" y="68" class="tile-pill">6379</text>
+    </g>
 
-    <rect x="264" y="360" width="214" height="128" rx="24" fill="url(#card-a)"/>
-    <rect x="288" y="384" width="54" height="54" rx="16" fill="#E0EDFF"/>
-    <image href="../icons/bigquery.svg" x="296" y="392" width="38" height="38" preserveAspectRatio="xMidYMid meet"/>
-    <text x="358" y="407" fill="#17345D" font-size="23" font-family="IBM Plex Sans, Arial, sans-serif" font-weight="700">BigQuery</text>
-    <text x="358" y="432" fill="#4A678E" font-size="15" font-family="IBM Plex Sans, Arial, sans-serif">local SQL analytics</text>
-    <rect x="358" y="448" width="122" height="30" rx="15" fill="#E4F7EA"/>
-    <circle cx="380" cy="463" r="5" fill="#34A853"/>
-    <text x="393" y="468" fill="#2B6F42" font-size="15" font-family="IBM Plex Sans, Arial, sans-serif" font-weight="700">queries ready</text>
+    <g transform="translate(904 224)">
+      <rect width="48" height="268" rx="24" fill="#F7FAFF" stroke="#C8D9F2"/>
+      <circle cx="24" cy="34" r="11" fill="#E6F4EA"/>
+      <path d="M18 34L23 39L31 28" stroke="#34A853" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="24" cy="90" r="11" fill="#E6F4EA"/>
+      <path d="M18 90L23 95L31 84" stroke="#34A853" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="24" cy="146" r="11" fill="#E6F4EA"/>
+      <path d="M18 146L23 151L31 140" stroke="#34A853" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="24" cy="202" r="11" fill="#E6F4EA"/>
+      <path d="M18 202L23 207L31 196" stroke="#34A853" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="18" y="240" width="12" height="4" rx="2" fill="#8AB4F8"/>
+    </g>
 
-    <rect x="492" y="360" width="214" height="128" rx="24" fill="url(#card-a)"/>
-    <rect x="516" y="384" width="54" height="54" rx="16" fill="#E0EDFF"/>
-    <image href="../icons/workflows.svg" x="524" y="392" width="38" height="38" preserveAspectRatio="xMidYMid meet"/>
-    <text x="586" y="407" fill="#17345D" font-size="23" font-family="IBM Plex Sans, Arial, sans-serif" font-weight="700">Workflows</text>
-    <text x="586" y="432" fill="#4A678E" font-size="15" font-family="IBM Plex Sans, Arial, sans-serif">multi-step local flows</text>
-    <rect x="586" y="448" width="108" height="30" rx="15" fill="#E4F7EA"/>
-    <circle cx="608" cy="463" r="5" fill="#34A853"/>
-    <text x="621" y="468" fill="#2B6F42" font-size="15" font-family="IBM Plex Sans, Arial, sans-serif" font-weight="700">flows ready</text>
-
-    <rect x="720" y="360" width="214" height="128" rx="24" fill="url(#card-a)"/>
-    <rect x="744" y="384" width="54" height="54" rx="16" fill="#E0EDFF"/>
-    <image href="../icons/monitoring.svg" x="752" y="392" width="38" height="38" preserveAspectRatio="xMidYMid meet"/>
-    <text x="814" y="407" fill="#17345D" font-size="23" font-family="IBM Plex Sans, Arial, sans-serif" font-weight="700">Monitoring</text>
-    <text x="814" y="432" fill="#4A678E" font-size="15" font-family="IBM Plex Sans, Arial, sans-serif">metrics and health checks</text>
-    <rect x="814" y="448" width="110" height="30" rx="15" fill="#E4F7EA"/>
-    <circle cx="836" cy="463" r="5" fill="#34A853"/>
-    <text x="849" y="468" fill="#2B6F42" font-size="15" font-family="IBM Plex Sans, Arial, sans-serif" font-weight="700">healthy</text>
-
-    <rect x="264" y="504" width="670" height="20" rx="10" fill="#1F467A"/>
-    <rect x="264" y="504" width="496" height="20" rx="10" fill="url(#accent-a)"/>
-    <text x="264" y="537" fill="#B7CEF5" font-size="15" font-family="IBM Plex Sans, Arial, sans-serif">major services visible inside one local runtime</text>
+    <rect x="304" y="516" width="648" height="22" rx="11" fill="#203F69"/>
+    <text x="324" y="531" class="ui-muted">SDK / CLI requests stay on localhost</text>
+    <path d="M572 528H760" stroke="#8AB4F8" stroke-width="4" stroke-linecap="round" stroke-dasharray="10 12"/>
+    <text x="792" y="531" class="terminal-good">env exported</text>
   </g>
 
-  <path d="M150 606H1050L1008 644H192L150 606Z" fill="#C9D9EF"/>
-  <path d="M165 596H1035C1041 596 1046 601 1046 607V614C1046 620 1041 625 1035 625H165C159 625 154 620 154 614V607C154 601 159 596 165 596Z" fill="#ECF3FF"/>
-  <rect x="530" y="603" width="140" height="10" rx="5" fill="#D2E0F3"/>
+  <path d="M148 604H1052C1060 604 1067 611 1067 619V628C1067 636 1060 643 1052 643H148C140 643 133 636 133 628V619C133 611 140 604 148 604Z" fill="#EDF4FF" stroke="#D3E1F5"/>
+  <rect x="528" y="613" width="144" height="10" rx="5" fill="#D0DEF1"/>
 
-  <g>
-    <rect x="866" y="84" width="214" height="56" rx="20" fill="#FFFFFF" stroke="#D6E4F8"/>
-    <circle cx="900" cy="112" r="14" fill="#E4F7EA"/>
-    <path d="M893 112L899 118L908 106" stroke="#34A853" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
-    <text x="928" y="107" fill="#17345D" font-size="16" font-family="IBM Plex Sans, Arial, sans-serif" font-weight="700">No code change</text>
-    <text x="928" y="126" fill="#5A7397" font-size="13" font-family="IBM Plex Sans, Arial, sans-serif">same SDK and CLI flow</text>
+  <g filter="url(#chipShadow)">
+    <rect x="836" y="72" width="234" height="64" rx="18" fill="url(#glass)" stroke="#D5E3F7"/>
+    <circle cx="872" cy="104" r="15" fill="#E6F4EA"/>
+    <path d="M865 104L871 110L881 98" stroke="#34A853" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="900" y="99" class="badge-title">No code change</text>
+    <text x="900" y="119" class="badge-detail">same SDK and CLI flow</text>
   </g>
 
-  <g>
-    <rect x="90" y="540" width="186" height="56" rx="20" fill="#FFFFFF" stroke="#D6E4F8"/>
-    <circle cx="123" cy="568" r="14" fill="#E9F1FF"/>
-    <text x="116" y="573" fill="#1A73E8" font-size="18" font-family="IBM Plex Sans, Arial, sans-serif" font-weight="700">$</text>
-    <text x="146" y="563" fill="#17345D" font-size="16" font-family="IBM Plex Sans, Arial, sans-serif" font-weight="700">$0 cost</text>
-    <text x="146" y="582" fill="#5A7397" font-size="13" font-family="IBM Plex Sans, Arial, sans-serif">during local dev</text>
+  <g filter="url(#chipShadow)">
+    <rect x="118" y="524" width="202" height="64" rx="18" fill="url(#glass)" stroke="#D5E3F7"/>
+    <circle cx="154" cy="556" r="15" fill="#EAF2FF"/>
+    <text x="146" y="562" fill="#1A73E8" font-size="20" font-family="IBM Plex Sans, Arial, sans-serif" font-weight="800">$</text>
+    <text x="184" y="551" class="badge-title">$0 cost</text>
+    <text x="184" y="571" class="badge-detail">during local dev</text>
   </g>
 
-  <g>
-    <rect x="888" y="556" width="212" height="56" rx="20" fill="#FFFFFF" stroke="#D6E4F8"/>
-    <circle cx="921" cy="584" r="14" fill="#E4F7EA"/>
-    <path d="M914 584L920 590L929 578" stroke="#34A853" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
-    <text x="949" y="579" fill="#17345D" font-size="16" font-family="IBM Plex Sans, Arial, sans-serif" font-weight="700">&lt; 1 min boot</text>
-    <text x="949" y="598" fill="#5A7397" font-size="13" font-family="IBM Plex Sans, Arial, sans-serif">local stack ready fast</text>
+  <g filter="url(#chipShadow)">
+    <rect x="868" y="544" width="214" height="64" rx="18" fill="url(#glass)" stroke="#D5E3F7"/>
+    <circle cx="904" cy="576" r="15" fill="#E6F4EA"/>
+    <path d="M897 576L903 582L913 570" stroke="#34A853" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="932" y="571" class="badge-title">&lt; 1 min boot</text>
+    <text x="932" y="591" class="badge-detail">runtime ready locally</text>
   </g>
 </svg>
