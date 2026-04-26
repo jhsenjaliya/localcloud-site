@@ -1,4 +1,6 @@
 ---
+import BrandMark from './BrandMark.astro';
+
 const rawBase = import.meta.env.BASE_URL;
 const base = rawBase.endsWith('/') ? rawBase : rawBase + '/';
 const currentPath = Astro.url.pathname;
@@ -21,8 +23,11 @@ const navLinks = [
   <div class="container site-header__inner">
     <div class="site-header__brand-row">
       <a href={base} class="site-brand">
-        <span class="site-brand__dot"></span>
-        <span>LocalCloud</span>
+        <BrandMark size={42} class="site-brand__mark" />
+        <span class="site-brand__text">
+          <span class="site-brand__word"><span>Local</span><span class="site-brand__word-accent">Cloud</span></span>
+          <span class="site-brand__descriptor">Google Cloud in-a-box</span>
+        </span>
       </a>
     </div>
 

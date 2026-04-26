@@ -12,7 +12,7 @@ const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
 const {
   title,
   description = 'LocalCloud — Google Cloud Platform in a box. Run major Google Cloud services locally in a single Docker container.',
-  ogImage = `${base}illustrations/hero-laptop-service-grid.svg`,
+  ogImage = `${base}brand/localcloud-social-card.svg`,
 } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const ogImageURL = new URL(ogImage, Astro.site);
@@ -25,6 +25,8 @@ const ogImageURL = new URL(ogImage, Astro.site);
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
+    <link rel="icon" href={`${base}brand/localcloud-mark.svg`} type="image/svg+xml" />
+    <meta name="theme-color" content="#eaf2ff" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />

@@ -13,10 +13,17 @@
   --text-2: #556a86;
   --text-3: #8092ad;
 
-  --accent: #2d6cdf;
-  --accent-strong: #1d56ba;
-  --accent-soft: rgba(45, 108, 223, 0.12);
-  --success: #137a6f;
+  --brand-blue: #1a73e8;
+  --brand-blue-strong: #0b57d0;
+  --brand-sky: #67a4ff;
+  --brand-green: #188038;
+  --brand-yellow: #fbbc04;
+  --brand-red: #ea4335;
+
+  --accent: var(--brand-blue);
+  --accent-strong: var(--brand-blue-strong);
+  --accent-soft: rgba(26, 115, 232, 0.12);
+  --success: var(--brand-green);
   --success-soft: rgba(19, 122, 111, 0.12);
   --warn: #866439;
   --warn-soft: rgba(134, 100, 57, 0.12);
@@ -220,23 +227,58 @@ img {
 .site-brand {
   display: inline-flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.72rem;
   min-width: 0;
   color: var(--text);
+  font-family: var(--font-body);
+  text-decoration: none;
+}
+
+.brand-mark {
+  display: block;
+  flex: 0 0 auto;
+  filter: drop-shadow(0 12px 18px rgba(11, 87, 208, 0.18));
+}
+
+.site-brand__mark {
+  transition:
+    transform 180ms var(--ease),
+    filter 180ms var(--ease);
+}
+
+.site-brand__text {
+  display: grid;
+  gap: 0.08rem;
+  min-width: 0;
+}
+
+.site-brand__word {
+  display: inline-flex;
+  align-items: baseline;
+  color: var(--text);
+  font-size: 1.08rem;
+  font-weight: 750;
+  letter-spacing: -0.045em;
+  line-height: 1;
+}
+
+.site-brand__word-accent {
+  color: var(--accent);
+}
+
+.site-brand__descriptor {
+  color: var(--text-3);
   font-family: var(--font-mono);
-  font-size: 0.95rem;
+  font-size: 0.55rem;
   font-weight: 600;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.12em;
+  line-height: 1;
   text-transform: uppercase;
 }
 
-.site-brand__dot {
-  width: 0.72rem;
-  height: 0.72rem;
-  flex: 0 0 auto;
-  border-radius: 999px;
-  background: linear-gradient(135deg, var(--accent), var(--success));
-  box-shadow: 0 0 0 0.24rem rgba(45, 108, 223, 0.12);
+.site-brand:hover .site-brand__mark {
+  transform: translateY(-1px) rotate(-2deg);
+  filter: drop-shadow(0 16px 22px rgba(11, 87, 208, 0.24));
 }
 
 .site-header__ledger {
@@ -560,7 +602,7 @@ img {
 }
 
 .site-footer__brand {
-  max-width: 18rem;
+  max-width: 21rem;
 }
 
 .site-footer__brand p,
@@ -1154,6 +1196,14 @@ img {
 
   .site-header__inner {
     min-height: 4rem;
+  }
+
+  .site-brand__descriptor {
+    display: none;
+  }
+
+  .site-brand__word {
+    font-size: 1rem;
   }
 
   .site-header__ledger {
