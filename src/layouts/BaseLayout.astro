@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import SearchModal from '../components/SearchModal.astro';
 
 interface Props {
   title: string;
@@ -57,49 +58,37 @@ const ogImageURL = new URL(ogImage, Astro.site);
 
       posthog.init('phc_o9nQDAQjEgsPcamE8pCnhv7ekA8CmA2VQXechLju9LA9', {
         api_host: 'https://us.i.posthog.com',
-        // Pin default behaviors to this date to prevent upstream changes
-        defaults: '2026-01-30',
+        defaults: '2026-01-30', // Pin SDK defaults to prevent upstream behavior changes
 
-        // Page tracking
+        // Page tracking — gives us geo (IP), pages visited, exit pages
         capture_pageview: true,
         capture_pageleave: 'if_capture_pageview',
 
-        // Autocapture: clicks, form submissions, input changes
+        // Autocapture — covers CTA clicks, link clicks, form submits
         autocapture: true,
-
-        // Session replay — full DOM snapshots + mouse movement
-        session_recording: {
-          recordCrossOriginIframes: true,
-        },
 
         // Error tracking
         capture_exceptions: true,
 
-        // Capture heatmap data (clicks + rage clicks)
-        capture_heatmaps: true,
-
-        // UTM params, referrer, etc. persisted across pages
+        // UTM params, referrer persisted across pages
         store_google: true,
         save_referrer: true,
 
-        // Anonymous events without creating person profiles (controls billing)
+        // Anonymous events (controls billing)
         person_profiles: 'identified_only',
 
-        // Dead clicks detection
-        capture_dead_clicks: true,
-
-        // Web vitals + network timing
-        capture_performance: {
-          network_timing: true,
-          web_vitals: true,
-          web_vitals_allowed_metrics: ['CLS', 'FCP', 'FID', 'INP', 'LCP', 'TTFB'],
-        },
+        // Disabled — enable via feature flag when needed
+        disable_session_recording: true,
+        capture_heatmaps: false,
+        capture_dead_clicks: false,
+        capture_performance: false,
       });
     </script>
   </head>
   <body>
     <a href="#main-content" class="skip-link">Skip to content</a>
     <slot />
+    <SearchModal />
 
     <script>
       // Enable reveal animations only when JS is available
@@ -122,98 +111,26 @@ const ogImageURL = new URL(ogImage, Astro.site);
       (function() {
         if (typeof window.posthog === 'undefined') return;
 
-        // ─── Scroll depth tracking ───
-        var scrollThresholds = [25, 50, 75, 90, 100];
-        var scrollFired = new Set();
-
-        function getScrollPercent() {
-          var h = document.documentElement;
-          var b = document.body;
-          var scrollTop = h.scrollTop || b.scrollTop;
-          var scrollHeight = (h.scrollHeight || b.scrollHeight) - h.clientHeight;
-          return scrollHeight > 0 ? Math.round((scrollTop / scrollHeight) * 100) : 0;
-        }
-
-        var scrollTicking = false;
-        window.addEventListener('scroll', function() {
-          if (!scrollTicking) {
-            requestAnimationFrame(function() {
-              var pct = getScrollPercent();
-              scrollThresholds.forEach(function(threshold) {
-                if (pct >= threshold && !scrollFired.has(threshold)) {
-                  scrollFired.add(threshold);
-                  posthog.capture('scroll_depth', {
-                    depth_percent: threshold,
-                    page_path: window.location.pathname,
-                    page_title: document.title,
-                  });
-                }
-              });
-              scrollTicking = false;
-            });
-            scrollTicking = true;
-          }
-        }, { passive: true });
-
-        // ─── Single delegated click handler for all custom events ───
+        // ─── Click tracking: code copy + GitHub clickthrough ───
         document.addEventListener('click', function(e) {
-          // Outbound links + CTA tracking
-          var link = e.target.closest('a[href]');
-          if (link) {
-            var href = link.getAttribute('href');
-            if (href) {
-              if (href.startsWith('http') && !href.includes(window.location.hostname)) {
-                posthog.capture('outbound_link_click', {
-                  url: href,
-                  link_text: (link.textContent || '').trim().slice(0, 100),
-                  page_path: window.location.pathname,
-                });
-              }
-              if (link.classList.contains('cta') ||
-                  link.classList.contains('site-cta') ||
-                  link.getAttribute('data-track') === 'cta') {
-                posthog.capture('cta_click', {
-                  cta_text: (link.textContent || '').trim().slice(0, 100),
-                  cta_href: href,
-                  page_path: window.location.pathname,
-                  page_section: link.closest('section')?.className || 'unknown',
-                });
-              }
-            }
-          }
-
-          // Code block copy buttons (scoped to avoid carousel false positives)
-          if (e.target.closest('.docs-code-copy, .copy-button')) {
+          if (e.target.closest('.docs-code-copy, .copy-btn')) {
             posthog.capture('code_copied', {
               page_path: window.location.pathname,
               page_title: document.title,
             });
           }
 
-          // Doc sidebar navigation
-          var sidebarLink = e.target.closest('.docs-sidebar__link');
-          if (sidebarLink) {
-            posthog.capture('docs_nav_click', {
-              target_page: sidebarLink.getAttribute('href'),
-              link_label: (sidebarLink.textContent || '').trim(),
-              from_page: window.location.pathname,
-            });
-          }
-
-          // TOC link clicks
-          var tocLink = e.target.closest('.docs-toc__link');
-          if (tocLink) {
-            posthog.capture('toc_click', {
-              anchor: tocLink.getAttribute('href'),
-              heading_text: (tocLink.textContent || '').trim(),
+          var ghLink = e.target.closest('a[href*="github.com"]');
+          if (ghLink) {
+            posthog.capture('github_click', {
               page_path: window.location.pathname,
             });
           }
         });
 
-        // ─── Time on page (active tab only, auto-clears) ───
+        // ─── Time on page — 2 buckets: casual (30s) vs engaged (120s) ───
         var pageStart = Date.now();
-        var timeBuckets = [10, 30, 60, 120, 300];
+        var timeBuckets = [30, 120];
         var timeFired = new Set();
 
         var timeInterval = setInterval(function() {
@@ -229,15 +146,12 @@ const ogImageURL = new URL(ogImage, Astro.site);
               });
             }
           });
-          if (timeFired.size >= timeBuckets.length) {
-            clearInterval(timeInterval);
-          }
+          if (timeFired.size >= timeBuckets.length) clearInterval(timeInterval);
         }, 5000);
 
-        // ─── Persistent page metadata ───
+        // ─── Landing context (once per session) ───
         posthog.register_once({
           site: 'localcloud-docs',
-          site_version: '1.0',
           landing_page: window.location.pathname,
           landing_referrer: document.referrer || 'direct',
         });

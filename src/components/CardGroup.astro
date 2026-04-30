@@ -1,0 +1,20 @@
+---
+/**
+ * Grid wrapper for Card components.
+ *
+ * Usage in MDX:
+ *   <CardGroup cols={2}>
+ *     <Card ... />
+ *     <Card ... />
+ *   </CardGroup>
+ */
+interface Props {
+  cols?: 2 | 3 | 4;
+}
+
+const { cols = 2 } = Astro.props;
+---
+
+<div class:list={['card-group', `card-group--cols-${cols}`]}>
+  <slot />
+</div>

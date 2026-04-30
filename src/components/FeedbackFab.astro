@@ -1,0 +1,121 @@
+---
+// Floating feedback button → opens menu with Feature Request / Content Issue links
+// Both link to GitHub Issues with pre-filled templates
+const repo = 'https://github.com/LocalStack-Google/localstack-google.github.io';
+---
+
+<div class="feedback-fab" data-feedback-fab>
+  <button
+    type="button"
+    class="feedback-fab__trigger"
+    aria-label="Send feedback"
+    aria-expanded="false"
+    data-fab-trigger
+  >
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+    </svg>
+    <span class="feedback-fab__label">Feedback</span>
+  </button>
+
+  <div class="feedback-fab__menu" data-fab-menu hidden>
+    <a
+      class="feedback-fab__item"
+      data-fab-feature
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <path d="M12 20h9"/><path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z"/>
+      </svg>
+      Request a Feature
+    </a>
+    <a
+      class="feedback-fab__item"
+      data-fab-issue
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/>
+      </svg>
+      Report Content Issue
+    </a>
+  </div>
+</div>
+
+<script is:inline>
+(function() {
+  var repo = 'https://github.com/LocalStack-Google/localstack-google.github.io';
+  var fab = document.querySelector('[data-feedback-fab]');
+  var trigger = fab?.querySelector('[data-fab-trigger]');
+  var menu = fab?.querySelector('[data-fab-menu]');
+  var featureLink = fab?.querySelector('[data-fab-feature]');
+  var issueLink = fab?.querySelector('[data-fab-issue]');
+
+  if (!fab || !trigger || !menu) return;
+
+  // Build GitHub issue URLs with page context
+  function buildFeatureUrl() {
+    var title = encodeURIComponent('[Feature] ');
+    var body = encodeURIComponent(
+      '## Feature Request\n\n' +
+      '**Description:**\n\n\n' +
+      '**Use case:**\n\n\n' +
+      '**Additional context:**\n\n'
+    );
+    return repo + '/issues/new?title=' + title + '&body=' + body + '&labels=enhancement';
+  }
+
+  function buildIssueUrl() {
+    var page = window.location.pathname;
+    var pageTitle = document.title;
+    var title = encodeURIComponent('[Docs] Issue on: ' + pageTitle);
+    var body = encodeURIComponent(
+      '## Content Issue\n\n' +
+      '**Page:** ' + window.location.href + '\n\n' +
+      '**What\'s wrong:**\n\n\n' +
+      '**Expected content:**\n\n\n'
+    );
+    return repo + '/issues/new?title=' + title + '&body=' + body + '&labels=documentation';
+  }
+
+  // Set URLs dynamically (page context varies)
+  function updateUrls() {
+    if (featureLink) featureLink.href = buildFeatureUrl();
+    if (issueLink) issueLink.href = buildIssueUrl();
+  }
+
+  trigger.addEventListener('click', function() {
+    var isOpen = menu.hidden === false;
+    menu.hidden = isOpen;
+    trigger.setAttribute('aria-expanded', String(!isOpen));
+    if (!isOpen) updateUrls();
+
+    if (!isOpen && typeof posthog !== 'undefined') {
+      posthog.capture('feedback_fab_opened', { page_path: window.location.pathname });
+    }
+  });
+
+  // Close on outside click
+  document.addEventListener('click', function(e) {
+    if (!fab.contains(e.target) && !menu.hidden) {
+      menu.hidden = true;
+      trigger.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // Track clicks
+  featureLink?.addEventListener('click', function() {
+    if (typeof posthog !== 'undefined') {
+      posthog.capture('feature_request_clicked', { page_path: window.location.pathname });
+    }
+  });
+
+  issueLink?.addEventListener('click', function() {
+    if (typeof posthog !== 'undefined') {
+      posthog.capture('content_issue_clicked', { page_path: window.location.pathname });
+    }
+  });
+})();
+</script>

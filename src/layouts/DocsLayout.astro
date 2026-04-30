@@ -2,6 +2,8 @@
 import BaseLayout from './BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import DocFeedback from '../components/DocFeedback.astro';
+import FeedbackFab from '../components/FeedbackFab.astro';
 
 interface Props {
   title?: string;
@@ -35,6 +37,7 @@ const sidebarSections = [
   { title: 'Learn', items: [
     { label: 'Architecture', href: `${base}docs/architecture/` },
     { label: 'BigQuery emulator features', href: `${base}docs/bigquery-emulator-features/` },
+    { label: 'Bigtable emulator features', href: `${base}docs/bigtable-emulator-features/` },
     { label: 'Spanner emulator features', href: `${base}docs/spanner-emulator-features/` },
     { label: 'Web Console', href: `${base}docs/console/` },
     { label: 'FAQ', href: `${base}docs/faq/` },
@@ -134,6 +137,8 @@ const tocItems = (Astro.props.headings ?? []).filter((heading) => heading.depth 
                 <slot />
               </div>
 
+              <DocFeedback />
+
               {(previousItem || nextItem) && (
                 <nav class="docs-pagination" aria-label="Document navigation">
                   {previousItem ? (
@@ -222,5 +227,6 @@ const tocItems = (Astro.props.headings ?? []).filter((heading) => heading.depth 
     }
   </script>
 
+  <FeedbackFab />
   <Footer />
 </BaseLayout>

@@ -1,0 +1,23 @@
+---
+/**
+ * Numbered steps container — Mintlify-style.
+ * Auto-numbers child <Step> components via CSS counters.
+ *
+ * Usage in MDX:
+ *   import Steps from '../../components/Steps.astro';
+ *   import Step from '../../components/Step.astro';
+ *
+ *   <Steps>
+ *     <Step title="Pull the image">
+ *       Content here...
+ *     </Step>
+ *     <Step title="Start the container">
+ *       More content...
+ *     </Step>
+ *   </Steps>
+ */
+---
+
+<div class="steps">
+  <slot />
+</div>

@@ -1,0 +1,31 @@
+---
+/**
+ * Single step inside a <Steps> container.
+ * Auto-numbers via CSS counter. stepNumber prop is optional override.
+ *
+ * Usage:
+ *   <Step title="Pull the image">
+ *     ```bash
+ *     docker pull jaysen2apache/localcloud
+ *     ```
+ *   </Step>
+ */
+interface Props {
+  title: string;
+  stepNumber?: number;
+}
+
+const { title, stepNumber } = Astro.props;
+---
+
+<div class="step">
+  <div class="step__number">
+    {stepNumber != null ? stepNumber : null}
+  </div>
+  <div class="step__body">
+    <h3 class="step__title">{title}</h3>
+    <div class="step__content">
+      <slot />
+    </div>
+  </div>
+</div>

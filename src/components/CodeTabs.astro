@@ -1,0 +1,139 @@
+---
+/**
+ * Language-tabbed code blocks — Mintlify-style.
+ *
+ * Usage in MDX:
+ *   <CodeTabs labels={["Python", "Node.js", "Bash"]}>
+ *     <Fragment slot="tab-0">
+ *       ```python
+ *       print("hello")
+ *       ```
+ *     </Fragment>
+ *     <Fragment slot="tab-1">
+ *       ```javascript
+ *       console.log("hello");
+ *       ```
+ *     </Fragment>
+ *     <Fragment slot="tab-2">
+ *       ```bash
+ *       echo hello
+ *       ```
+ *     </Fragment>
+ *   </CodeTabs>
+ *
+ * Supports up to 5 tabs (tab-0 through tab-4).
+ */
+interface Props {
+  labels: string[];
+}
+
+const { labels } = Astro.props;
+const id = `ct-${Math.random().toString(36).slice(2, 8)}`;
+---
+
+<div class="code-tabs" data-code-tabs={id}>
+  <div class="code-tabs__bar" role="tablist">
+    {labels.map((label, i) => (
+      <button
+        type="button"
+        role="tab"
+        id={`${id}-tab-${i}`}
+        class:list={['code-tabs__tab', i === 0 && 'is-active']}
+        aria-selected={i === 0 ? 'true' : 'false'}
+        aria-controls={`${id}-panel-${i}`}
+        tabindex={i === 0 ? '0' : '-1'}
+        data-tab-index={String(i)}
+      >
+        {label}
+      </button>
+    ))}
+  </div>
+
+  {labels.length > 0 && (
+    <div id={`${id}-panel-0`} role="tabpanel" class="code-tabs__panel" data-panel-index="0" aria-labelledby={`${id}-tab-0`}>
+      <slot name="tab-0" />
+    </div>
+  )}
+  {labels.length > 1 && (
+    <div id={`${id}-panel-1`} role="tabpanel" class="code-tabs__panel is-hidden" data-panel-index="1" aria-labelledby={`${id}-tab-1`}>
+      <slot name="tab-1" />
+    </div>
+  )}
+  {labels.length > 2 && (
+    <div id={`${id}-panel-2`} role="tabpanel" class="code-tabs__panel is-hidden" data-panel-index="2" aria-labelledby={`${id}-tab-2`}>
+      <slot name="tab-2" />
+    </div>
+  )}
+  {labels.length > 3 && (
+    <div id={`${id}-panel-3`} role="tabpanel" class="code-tabs__panel is-hidden" data-panel-index="3" aria-labelledby={`${id}-tab-3`}>
+      <slot name="tab-3" />
+    </div>
+  )}
+  {labels.length > 4 && (
+    <div id={`${id}-panel-4`} role="tabpanel" class="code-tabs__panel is-hidden" data-panel-index="4" aria-labelledby={`${id}-tab-4`}>
+      <slot name="tab-4" />
+    </div>
+  )}
+</div>
+
+<script>
+  function initCodeTabs() {
+    document.querySelectorAll('[data-code-tabs]').forEach((root) => {
+      if (root.dataset.tabsReady === 'true') return;
+      root.dataset.tabsReady = 'true';
+
+      const tabs = Array.from(root.querySelectorAll('[role="tab"]'));
+      const panels = root.querySelectorAll('[role="tabpanel"]');
+
+      function activateTab(tab) {
+        const idx = tab.getAttribute('data-tab-index');
+        tabs.forEach((t) => {
+          const isActive = t.getAttribute('data-tab-index') === idx;
+          t.classList.toggle('is-active', isActive);
+          t.setAttribute('aria-selected', isActive ? 'true' : 'false');
+          t.setAttribute('tabindex', isActive ? '0' : '-1');
+        });
+        panels.forEach((p) => {
+          p.classList.toggle('is-hidden', p.getAttribute('data-panel-index') !== idx);
+        });
+        tab.focus();
+      }
+
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => activateTab(tab));
+      });
+
+      // Arrow key navigation (WAI-ARIA Tabs Pattern)
+      root.querySelector('[role="tablist"]').addEventListener('keydown', (e) => {
+        const currentIndex = tabs.indexOf(e.target);
+        if (currentIndex < 0) return;
+
+        let newIndex;
+        switch (e.key) {
+          case 'ArrowRight':
+            newIndex = (currentIndex + 1) % tabs.length;
+            break;
+          case 'ArrowLeft':
+            newIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+            break;
+          case 'Home':
+            newIndex = 0;
+            break;
+          case 'End':
+            newIndex = tabs.length - 1;
+            break;
+          default:
+            return;
+        }
+        e.preventDefault();
+        activateTab(tabs[newIndex]);
+      });
+    });
+  }
+
+  // Run on initial load
+  initCodeTabs();
+
+  // Re-run after Astro View Transitions page swap
+  document.addEventListener('astro:page-load', initCodeTabs);
+</script>

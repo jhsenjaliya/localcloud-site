@@ -4,11 +4,33 @@ title: Getting Started
 description: Get LocalCloud running in less than 1 minute.
 ---
 
+import CardGroup from '../../components/CardGroup.astro';
+import Card from '../../components/Card.astro';
+import Callout from '../../components/Callout.astro';
+import Steps from '../../components/Steps.astro';
+import Step from '../../components/Step.astro';
+import CodeTabs from '../../components/CodeTabs.astro';
+
 # Getting Started
 
 Get LocalCloud up and running in less than 1 minute. By the end of this guide, you'll have the major Google Cloud services your team reaches for first running locally.
 
 No cloud access. No credentials. No cloud costs.
+
+<CardGroup cols={2}>
+  <Card title="Services" icon="grid" href="/services/">
+    Browse major Google Cloud services by category.
+  </Card>
+  <Card title="SDK Examples" icon="code" href="/docs/sdk-examples/">
+    Copy-paste examples for Python, Node.js, Go, and Java.
+  </Card>
+  <Card title="Configuration" icon="settings" href="/docs/configuration/">
+    Environment variables, ports, and settings.
+  </Card>
+  <Card title="Architecture" icon="layers" href="/docs/architecture/">
+    How LocalCloud emulates GCP services internally.
+  </Card>
+</CardGroup>
 
 ## Prerequisites
 
@@ -23,13 +45,15 @@ brew install --cask docker-desktop
 
 ## Quick Start
 
-### 1. Pull the image
+<Steps>
+  <Step title="Pull the image">
 
 ```bash
 docker pull jaysen2apache/localcloud
 ```
 
-### 2. Start LocalCloud
+  </Step>
+  <Step title="Start LocalCloud">
 
 ```bash
 docker volume create localcloud-data
@@ -42,8 +66,8 @@ docker run -d \
   jaysen2apache/localcloud
 ```
 
-
-### 3. Open the console
+  </Step>
+  <Step title="Open the console">
 
 ```bash
 open http://localhost:8080
@@ -51,7 +75,8 @@ open http://localhost:8080
 
 The console is built into the running container, so you can inspect service status, browse data, and confirm the runtime is healthy before you debug your app.
 
-### 4. Configure your SDK
+  </Step>
+  <Step title="Configure your SDK">
 
 Set environment variables for all services so your GCP SDKs connect to LocalCloud:
 
@@ -62,11 +87,14 @@ eval "$(curl -s http://localhost:8080/_localcloud/env?format=shell)"
 This sets variables for all provided services like `STORAGE_EMULATOR_HOST`, `PUBSUB_EMULATOR_HOST`, etc.
 To setup only specific service, refer to user guide on console.
 
+  </Step>
+</Steps>
+
 
 ## Make Your First API Call
 
-Here's a quick Python example with Cloud Storage:
-
+<CodeTabs labels={["Python", "Node.js", "Go"]}>
+  <Fragment slot="tab-0">
 ```python
 from google.cloud import storage
 
@@ -83,8 +111,67 @@ blob.upload_from_string("Hello, LocalCloud!")
 print(blob.download_as_text())
 # Output: Hello, LocalCloud!
 ```
+  </Fragment>
+  <Fragment slot="tab-1">
+```javascript
+const {Storage} = require('@google-cloud/storage');
 
-> **Zero code changes** — this same code works against real GCP. Just unset the emulator environment variables.
+const storage = new Storage();
+
+async function main() {
+  // Create a bucket
+  await storage.createBucket('my-first-bucket');
+
+  // Upload a file
+  const bucket = storage.bucket('my-first-bucket');
+  await bucket.file('hello.txt').save('Hello, LocalCloud!');
+
+  // Read it back
+  const [content] = await bucket.file('hello.txt').download();
+  console.log(content.toString());
+  // Output: Hello, LocalCloud!
+}
+
+main();
+```
+  </Fragment>
+  <Fragment slot="tab-2">
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "io"
+
+    "cloud.google.com/go/storage"
+)
+
+func main() {
+    ctx := context.Background()
+    client, _ := storage.NewClient(ctx)
+
+    // Create a bucket
+    client.Bucket("my-first-bucket").Create(ctx, "local-project", nil)
+
+    // Upload a file
+    w := client.Bucket("my-first-bucket").Object("hello.txt").NewWriter(ctx)
+    fmt.Fprint(w, "Hello, LocalCloud!")
+    w.Close()
+
+    // Read it back
+    r, _ := client.Bucket("my-first-bucket").Object("hello.txt").NewReader(ctx)
+    data, _ := io.ReadAll(r)
+    fmt.Println(string(data))
+    // Output: Hello, LocalCloud!
+}
+```
+  </Fragment>
+</CodeTabs>
+
+<Callout type="tip" title="Zero code changes">
+This same code works against real GCP. Just unset the emulator environment variables.
+</Callout>
 
 ## Verify Services Are Running
 
@@ -97,10 +184,17 @@ Or visit the web console at [http://localhost:8080](http://localhost:8080).
 
 ## Next Steps
 
-- [Services](../services/) — Browse major Google Cloud services by category
-- [Services Overview](./services-overview/) — See how LocalCloud groups major Google Cloud categories
-- [Configuration](./configuration/) — Environment variables and settings
-- [Seed Data](./seed-data/) — Pre-populate services with test data
-- [Web Console](./console/) — Browse data and run queries from your browser
-- [BigQuery emulator features](./bigquery-emulator-features/) — See how the DuckDB-based BigQuery emulator is built and where it shines
-- [Spanner emulator features](./spanner-emulator-features/) — See how LocalCloud packages Spanner emulation for local app workflows
+<CardGroup cols={2}>
+  <Card title="Services Overview" icon="grid" href="/docs/services-overview/">
+    See how LocalCloud groups major Google Cloud categories.
+  </Card>
+  <Card title="Seed Data" icon="database" href="/docs/seed-data/">
+    Pre-populate services with test data.
+  </Card>
+  <Card title="Web Console" icon="terminal" href="/docs/console/">
+    Browse data and run queries from your browser.
+  </Card>
+  <Card title="BigQuery Features" icon="book" href="/docs/bigquery-emulator-features/">
+    See how the DuckDB-based BigQuery emulator works.
+  </Card>
+</CardGroup>
