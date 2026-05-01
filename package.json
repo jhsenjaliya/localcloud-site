@@ -17,5 +17,8 @@
   },
   "devDependencies": {
     "pagefind": "^1.5.2"
+  },
+  "overrides": {
+    "vite": "^7.3.2"
   }
 }
