@@ -20,20 +20,21 @@ jobs:
     steps:
       - name: Checkout your repository using git
         uses: actions/checkout@v5
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
       - name: Setup Node
         uses: actions/setup-node@v5
         with:
           node-version: 22
+          cache: pnpm
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v5
-      - name: Clean npm cache
-        run: npm cache clean --force
       - name: Install dependencies
-        run: npm install --no-audit --no-fund
-        env:
-          npm_config_loglevel: verbose
+        run: pnpm install --no-frozen-lockfile
       - name: Build site
-        run: npm run build
+        run: pnpm build
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v4
         with:
