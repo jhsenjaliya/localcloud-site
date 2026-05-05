@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import ImmersiveIDE from '../components/ImmersiveIDE.astro';
+---
+
+<BaseLayout title="LocalCloud — Immersive IDE Animation">
+  <Header />
+  
+  <main class="site-page">
+    <div class="container">
+      <header class="site-section-heading" style="text-align: center; align-items: center; margin-bottom: 4rem;">
+        <span class="site-eyebrow">Visual Experiment</span>
+        <h1>The Immersive Runtime</h1>
+        <p>A GitHub Copilot-inspired animation showcasing the LocalCloud terminal and real-time service status.</p>
+      </header>
+
+      <ImmersiveIDE />
+
+      <section class="site-section">
+        <div class="site-panel site-panel--soft" style="padding: 2rem;">
+          <h3>How it works</h3>
+          <ul class="site-list">
+            <li><strong>CSS Perspective:</strong> Uses <code>perspective</code> and <code>rotate</code> transforms to give the IDE window a 3D depth.</li>
+            <li><strong>Layered Glows:</strong> Radial gradients with high blur values (100px+) and <code>drift</code> animations create the immersive background.</li>
+            <li><strong>Floating Mascot:</strong> Uses <code>drop-shadow</code> and a custom keyframe animation to make the LocalCloud mark "drift" in 3D space.</li>
+            <li><strong>Intersection Observer:</strong> The typing animation only triggers when the component is scrolled into view.</li>
+          </ul>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>

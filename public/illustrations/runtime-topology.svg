@@ -61,7 +61,7 @@
   <text x="892" y="334" fill="#C4D7F8" font-family="IBM Plex Sans, sans-serif" font-size="18">Health and browse data</text>
   <text x="892" y="376" fill="#8BA6D3" font-family="IBM Plex Mono, monospace" font-size="14" letter-spacing="1.6">FILESYSTEM</text>
   <text x="892" y="414" fill="#F5F9FF" font-family="IBM Plex Sans, sans-serif" font-size="22" font-weight="600">/var/lib/localcloud</text>
-  <text x="892" y="442" fill="#C4D7F8" font-family="IBM Plex Sans, sans-serif" font-size="18">GCS blobs, Spanner data, DuckDB</text>
+  <text x="892" y="442" fill="#C4D7F8" font-family="IBM Plex Sans, sans-serif" font-size="18">GCS blobs, Spanner data, DW</text>
 
   <rect x="126" y="390" width="950" height="172" rx="30" fill="#FDFEFF" stroke="#D4E2F4" stroke-width="2"/>
   <text x="152" y="425" fill="#6B7F9D" font-family="IBM Plex Mono, monospace" font-size="14" letter-spacing="1.6">SUPERVISED PROCESSES</text>

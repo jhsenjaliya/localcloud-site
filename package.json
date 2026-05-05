@@ -3,6 +3,12 @@
   "version": "1.0.0",
   "description": "LocalCloud — Google Cloud Platform in a box. Official website and documentation.",
   "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "volta": {
+    "node": "22.12.0"
+  },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build && pagefind --site dist",
@@ -13,6 +19,7 @@
     "@astrojs/sitemap": "^3.7.2",
     "@tailwindcss/vite": "^4.2.2",
     "astro": "^6.1.8",
+    "puppeteer-core": "^24.42.0",
     "tailwindcss": "^4.2.2"
   },
   "devDependencies": {
